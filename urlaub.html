@@ -579,44 +579,7 @@
   .countdown-sep { font-size: 1.5rem; color: rgba(255,255,255,0.3); font-weight: 300; margin-bottom: 0.5rem; }
   .countdown-dest { color: rgba(255,255,255,0.55); font-size: 0.8rem; }
 
-  /* HERO WITH PHOTO */
-  .hero {
-    position: relative;
-    min-height: 520px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: hidden;
-    padding: 0;
-  }
-  .hero-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 60%;
-    display: block;
-  }
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(10,35,55,0.25) 0%, rgba(10,35,55,0.75) 100%);
-  }
-  .hero-shape {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 60px;
-    background: var(--sand);
-    clip-path: ellipse(55% 100% at 50% 100%);
-  }
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    color: white;
-    text-align: center;
-    padding: 5rem 2rem 4.5rem;
-  }
+  /* hero styles moved to slideshow CSS */
 
   /* BUDGET RECHNER */
   .budget-section { background: var(--white); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 2rem; }
@@ -667,11 +630,81 @@
   .price-row-val.pricey { color: var(--red); }
   .price-total-row { display: flex; justify-content: space-between; padding: 0.75rem 1.25rem; background: var(--ocean-pale); border-top: 1px solid var(--border); font-weight: 500; font-size: 0.88rem; }
   .price-total-val { color: var(--ocean); font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+
+  /* SLIDESHOW */
+  .hero { position:relative; min-height:520px; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden; padding:0; }
+  .slide { position:absolute; inset:0; opacity:0; transition:opacity 1.2s ease; }
+  .slide.active { opacity:1; }
+  .slide img { width:100%; height:100%; object-fit:cover; object-position:center 60%; display:block; }
+  .slide-dots { position:absolute; bottom:80px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:3; }
+  .slide-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.4); border:none; cursor:pointer; transition:background 0.3s; padding:0; }
+  .slide-dot.active { background:white; }
+  .slide-label { position:absolute; top:1rem; right:1rem; z-index:3; background:rgba(0,0,0,0.4); color:white; font-size:0.72rem; padding:0.3rem 0.75rem; border-radius:50px; backdrop-filter:blur(4px); }
+
+  /* GALLERY */
+  .gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:0.75rem; margin-bottom:2rem; }
+  .gallery-item { border-radius:10px; overflow:hidden; aspect-ratio:4/3; cursor:pointer; position:relative; }
+  .gallery-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.3s; display:block; }
+  .gallery-item:hover img { transform:scale(1.04); }
+  .gallery-item .gallery-cap { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(0,0,0,0.6)); color:white; font-size:0.72rem; padding:0.5rem 0.6rem 0.4rem; opacity:0; transition:opacity 0.25s; }
+  .gallery-item:hover .gallery-cap { opacity:1; }
+  .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:1000; align-items:center; justify-content:center; }
+  .lightbox.open { display:flex; }
+  .lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; object-fit:contain; }
+  .lightbox-close { position:absolute; top:1rem; right:1.5rem; color:white; font-size:2rem; cursor:pointer; background:none; border:none; line-height:1; }
+  .lightbox-cap { position:absolute; bottom:1.5rem; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.8); font-size:0.85rem; background:rgba(0,0,0,0.5); padding:0.4rem 1rem; border-radius:50px; white-space:nowrap; }
+
+  /* KLIMACHART */
+  .klima-wrap { background:var(--white); border-radius:12px; border:1px solid var(--border); padding:1.5rem; margin-bottom:2rem; }
+  .klima-title { font-weight:500; font-size:0.88rem; margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
+  .klima-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.25rem; }
+  .klima-tab { padding:0.35rem 0.9rem; border-radius:50px; font-size:0.78rem; font-weight:500; border:1.5px solid var(--border); background:transparent; cursor:pointer; transition:all 0.2s; }
+  .klima-tab.active { background:var(--ocean); color:white; border-color:var(--ocean); }
+  .klima-chart-area { position:relative; height:180px; display:flex; align-items:flex-end; gap:4px; padding:0 0 2rem; }
+  .klima-bar-group { flex:1; display:flex; gap:2px; align-items:flex-end; position:relative; }
+  .klima-bar { border-radius:3px 3px 0 0; transition:height 0.4s ease; min-width:8px; }
+  .klima-bar.temp { background:var(--sun); }
+  .klima-bar.rain { background:var(--ocean-light); opacity:0.7; }
+  .klima-month-label { position:absolute; bottom:-1.5rem; left:50%; transform:translateX(-50%); font-size:0.65rem; color:var(--text-muted); white-space:nowrap; }
+  .klima-legend { display:flex; gap:1.25rem; margin-top:0.5rem; }
+  .klima-legend-item { display:flex; align-items:center; gap:0.4rem; font-size:0.75rem; color:var(--text-muted); }
+  .klima-legend-dot { width:10px; height:10px; border-radius:2px; }
+
+  /* FACTS */
+  .facts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-bottom:2rem; }
+  .fact-card { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; display:flex; gap:0.75rem; align-items:flex-start; }
+  .fact-icon { font-size:1.6rem; flex-shrink:0; }
+  .fact-text { font-size:0.82rem; line-height:1.5; }
+  .fact-text strong { display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.07em; color:var(--ocean); margin-bottom:0.2rem; }
+
+  /* DECISION WIDGET */
+  .decision-widget { background:var(--white); border-radius:16px; border:1px solid var(--border); overflow:hidden; margin-bottom:2rem; }
+  .decision-header { padding:1.25rem 1.5rem; border-bottom:1px solid var(--border); background:var(--ocean); color:white; }
+  .decision-header h3 { font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:0.25rem; }
+  .decision-header p { font-size:0.82rem; opacity:0.8; }
+  .decision-questions { padding:1.5rem; }
+  .dq { margin-bottom:1.25rem; }
+  .dq-label { font-weight:500; font-size:0.88rem; margin-bottom:0.6rem; display:block; }
+  .dq-options { display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .dq-btn { padding:0.4rem 0.9rem; border-radius:50px; font-size:0.8rem; border:1.5px solid var(--border); background:transparent; cursor:pointer; transition:all 0.2s; font-family:inherit; }
+  .dq-btn.selected { background:var(--ocean); color:white; border-color:var(--ocean); }
+  .decision-cta { padding:0 1.5rem 1.5rem; }
+  .decision-go { width:100%; padding:0.85rem; background:var(--ocean); color:white; border:none; border-radius:10px; font-size:0.95rem; font-weight:500; cursor:pointer; font-family:inherit; transition:background 0.2s; }
+  .decision-go:hover { background:var(--ocean-light); }
+  .decision-result { display:none; padding:1.5rem; border-top:1px solid var(--border); background:var(--sand); }
+  .decision-result.show { display:block; }
+  .result-flag { font-size:2.5rem; margin-bottom:0.5rem; }
+  .result-title { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; margin-bottom:0.5rem; }
+  .result-text { font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem; }
+  .result-link { display:inline-block; padding:0.5rem 1.25rem; background:var(--ocean); color:white; border-radius:50px; font-size:0.82rem; font-weight:500; text-decoration:none; }
+
 </style>
 
 <!-- NAV -->
 <nav>
   <ul>
+    <li><a href="#entscheiden">🎯 Entscheiden</a></li>
+    <li><a href="#klima">🌡️ Klima</a></li>
     <li><a href="#uebersicht">Übersicht</a></li>
     <li><a href="#vergleich">Vergleich</a></li>
     <li><a href="#budget">💶 Budget</a></li>
@@ -699,30 +732,134 @@
   <span class="countdown-dest">bis 22. August 2026</span>
 </div>
 
-<!-- HERO WITH PHOTO -->
-<div class="hero">
-  <img
-    class="hero-img"
-    src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80&auto=format&fit=crop"
-    alt="Traumstrand mit türkisem Wasser und weißem Sand"
-    loading="eager"
-  />
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Reiseplaner · Familie · 22.08 – 06.09.2026</div>
-    <h1>Wo fahren<br>wir hin?</h1>
-    <p class="hero-sub">4 sorgfältig ausgewählte Reiseziele für euren Sommerurlaub — Strand, Sonne und familienfreundliche Unterkünfte im Überblick.</p>
-    <div class="hero-pills">
-      <span class="hero-pill">📍 Ab Dortmund</span>
-      <span class="hero-pill">🚗 max. 11–12 Std. Fahrt</span>
-      <span class="hero-pill">👨‍👩‍👧 2 Erw. + Kind (2 J.)</span>
-      <span class="hero-pill">🏕️ Camping / Mobilheim</span>
-      <span class="hero-pill">💶 Budget 2.000 – 4.000 €</span>
+<!-- HERO SLIDESHOW -->
+<div class="hero" id="hero-slideshow">
+  <div class="slide active" data-label="🇭🇷 Istrien, Kroatien">
+    <img src="https://images.unsplash.com/photo-1555990793-da11153b2473?w=1600&q=80&auto=format&fit=crop" alt="Istrien Kroatien Küste"/>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="slide" data-label="🇫🇷 Languedoc, Frankreich">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80&auto=format&fit=crop" alt="Sandstrand Südfrankreich"/>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="slide" data-label="🇮🇹 Maremma, Toskana">
+    <img src="https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1600&q=80&auto=format&fit=crop" alt="Toskana Strand Maremma"/>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="slide" data-label="🇮🇹 Gardasee, Italien">
+    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600&q=80&auto=format&fit=crop" alt="Gardasee Italien"/>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="slide-label" id="slide-label">🇭🇷 Istrien, Kroatien</div>
+  <div class="slide-dots" id="slide-dots">
+    <button class="slide-dot active" onclick="goSlide(0)"></button>
+    <button class="slide-dot" onclick="goSlide(1)"></button>
+    <button class="slide-dot" onclick="goSlide(2)"></button>
+    <button class="slide-dot" onclick="goSlide(3)"></button>
+  </div>
+  <div class="hero-content" style="position:relative;z-index:2;color:white;text-align:center;padding:5rem 2rem 4.5rem;">
+    <div style="display:inline-block;background:rgba(10,30,50,0.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:2rem 2.5rem 1.75rem;max-width:640px;">
+      <div class="hero-eyebrow" style="color:rgba(255,255,255,0.7);">Reiseplaner · Familie · 22.08 – 06.09.2026</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:700;line-height:1.1;margin:0.5rem 0 1rem;">Wo fahren<br>wir hin?</h1>
+      <p style="font-size:1rem;color:rgba(255,255,255,0.82);margin:0 0 1.5rem;">4 sorgfältig ausgewählte Reiseziele für euren Sommerurlaub — Strand, Sonne und familienfreundliche Unterkünfte im Überblick.</p>
+      <div class="hero-pills" style="justify-content:center;">
+        <span class="hero-pill">📍 Ab Dortmund</span>
+        <span class="hero-pill">🚗 max. 11–12 Std. Fahrt</span>
+        <span class="hero-pill">👨‍👩‍👧 2 Erw. + Kind (2 J.)</span>
+        <span class="hero-pill">🏕️ Camping / Mobilheim</span>
+        <span class="hero-pill">💶 Budget 2.000 – 4.000 €</span>
+      </div>
     </div>
   </div>
-  <div class="hero-shape"></div>
+  <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:var(--sand);clip-path:ellipse(55% 100% at 50% 100%);z-index:2;"></div>
 </div>
 
+<section id="entscheiden">
+  <div class="section-label">Entscheidungshilfe</div>
+  <h2 class="section-title">Hilf mir entscheiden</h2>
+  <div class="decision-widget">
+    <div class="decision-header">
+      <h3>🎯 Welches Ziel passt zu euch?</h3>
+      <p>Beantworte 5 kurze Fragen — wir empfehlen euer perfektes Reiseziel.</p>
+    </div>
+    <div class="decision-questions">
+      <div class="dq">
+        <span class="dq-label">1. Was ist euch am wichtigsten?</span>
+        <div class="dq-options">
+          <button class="dq-btn" data-q="1" data-v="wetter" onclick="selectDQ(this)">☀️ Bestes Wetter</button>
+          <button class="dq-btn" data-q="1" data-v="preis" onclick="selectDQ(this)">💶 Günstigster Preis</button>
+          <button class="dq-btn" data-q="1" data-v="strand" onclick="selectDQ(this)">🏖️ Sandstrand Pflicht</button>
+          <button class="dq-btn" data-q="1" data-v="kultur" onclick="selectDQ(this)">🏛️ Kultur & Ausflüge</button>
+        </div>
+      </div>
+      <div class="dq">
+        <span class="dq-label">2. Wie lange soll die Fahrt maximal sein?</span>
+        <div class="dq-options">
+          <button class="dq-btn" data-q="2" data-v="kurz" onclick="selectDQ(this)">🚗 Unter 9 Std.</button>
+          <button class="dq-btn" data-q="2" data-v="mittel" onclick="selectDQ(this)">🚗 10–11 Std.</button>
+          <button class="dq-btn" data-q="2" data-v="lang" onclick="selectDQ(this)">🚗 Bis 12 Std. OK</button>
+        </div>
+      </div>
+      <div class="dq">
+        <span class="dq-label">3. Meer oder See?</span>
+        <div class="dq-options">
+          <button class="dq-btn" data-q="3" data-v="meer" onclick="selectDQ(this)">🌊 Unbedingt Meer</button>
+          <button class="dq-btn" data-q="3" data-v="see" onclick="selectDQ(this)">🏔️ See reicht auch</button>
+          <button class="dq-btn" data-q="3" data-v="egal" onclick="selectDQ(this)">🤷 Egal</button>
+        </div>
+      </div>
+      <div class="dq">
+        <span class="dq-label">4. Wie wichtig ist das Budget?</span>
+        <div class="dq-options">
+          <button class="dq-btn" data-q="4" data-v="sparsam" onclick="selectDQ(this)">💚 Möglichst günstig</button>
+          <button class="dq-btn" data-q="4" data-v="mittel" onclick="selectDQ(this)">🟡 Mittleres Budget OK</button>
+          <button class="dq-btn" data-q="4" data-v="komfort" onclick="selectDQ(this)">🔴 Komfort geht vor</button>
+        </div>
+      </div>
+      <div class="dq">
+        <span class="dq-label">5. Was soll das Kind erleben?</span>
+        <div class="dq-options">
+          <button class="dq-btn" data-q="5" data-v="natur" onclick="selectDQ(this)">🌿 Natur & Tiere</button>
+          <button class="dq-btn" data-q="5" data-v="parks" onclick="selectDQ(this)">🎢 Freizeitparks</button>
+          <button class="dq-btn" data-q="5" data-v="strand" onclick="selectDQ(this)">🏖️ Nur Strand & Wasser</button>
+          <button class="dq-btn" data-q="5" data-v="mix" onclick="selectDQ(this)">🎉 Alles gemischt</button>
+        </div>
+      </div>
+    </div>
+    <div class="decision-cta">
+      <button class="decision-go" onclick="calcDecision()">🎯 Mein perfektes Reiseziel anzeigen</button>
+    </div>
+    <div class="decision-result" id="decision-result"></div>
+  </div>
+</section>
+<div class="section-divider"></div>
+<section id="klima">
+  <div class="section-label">Wetter & Klima</div>
+  <h2 class="section-title">Klimavergleich auf einen Blick</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-bottom:2rem;">
+    <div style="background:var(--white);border-radius:12px;border:1px solid var(--border);padding:1.25rem;">
+      <div style="font-weight:500;margin-bottom:1rem;font-size:0.9rem;">🇭🇷 Istrien — Aug/Sep</div>
+      <canvas id="klima_overview_ist" style="width:100%;height:120px;display:block;"></canvas>
+      <script>(function(){var c=document.getElementById('klima_overview_ist');if(!c)return;var ctx=c.getContext('2d');var W=c.offsetWidth||240;c.width=W*devicePixelRatio;c.height=120*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio);var d=[{m:'Jun',t:23,r:45},{m:'Jul',t:26,r:30},{m:'Aug',t:27,r:38},{m:'Sep',t:23,r:72},{m:'Okt',t:18,r:82}];var pad={l:25,r:5,t:8,b:20};var cw=W-pad.l-pad.r,ch=120-pad.t-pad.b;ctx.strokeStyle='rgba(0,0,0,0.07)';ctx.lineWidth=1;d.forEach(function(x,i){var bx=pad.l+i*(cw/d.length)+2;ctx.fillStyle='rgba(43,126,161,0.5)';var rh=(x.r/80)*ch*0.8;ctx.beginPath();ctx.roundRect(bx,pad.t+ch-rh,cw/d.length-4,rh,[2,2,0,0]);ctx.fill();});ctx.beginPath();ctx.strokeStyle='#D4841A';ctx.lineWidth=2;d.forEach(function(x,i){var cx2=pad.l+(i+0.5)*(cw/d.length);var cy=pad.t+ch*(1-x.t/40);i===0?ctx.moveTo(cx2,cy):ctx.lineTo(cx2,cy);});ctx.stroke();ctx.fillStyle='#888';ctx.font='8px sans-serif';ctx.textAlign='center';d.forEach(function(x,i){ctx.fillText(x.m,pad.l+(i+0.5)*(cw/d.length),pad.t+ch+14);});})();</script>
+    </div>
+    <div style="background:var(--white);border-radius:12px;border:1px solid var(--border);padding:1.25rem;">
+      <div style="font-weight:500;margin-bottom:1rem;font-size:0.9rem;">🇫🇷 Languedoc — Aug/Sep</div>
+      <canvas id="klima_overview_lan" style="width:100%;height:120px;display:block;"></canvas>
+      <script>(function(){var c=document.getElementById('klima_overview_lan');if(!c)return;var ctx=c.getContext('2d');var W=c.offsetWidth||240;c.width=W*devicePixelRatio;c.height=120*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio);var d=[{m:'Jun',t:23,r:28},{m:'Jul',t:28,r:15},{m:'Aug',t:29,r:18},{m:'Sep',t:24,r:55},{m:'Okt',t:19,r:75}];var pad={l:25,r:5,t:8,b:20};var cw=W-pad.l-pad.r,ch=120-pad.t-pad.b;d.forEach(function(x,i){var bx=pad.l+i*(cw/d.length)+2;ctx.fillStyle='rgba(43,126,161,0.5)';var rh=(x.r/80)*ch*0.8;ctx.beginPath();ctx.roundRect(bx,pad.t+ch-rh,cw/d.length-4,rh,[2,2,0,0]);ctx.fill();});ctx.beginPath();ctx.strokeStyle='#D4841A';ctx.lineWidth=2;d.forEach(function(x,i){var cx2=pad.l+(i+0.5)*(cw/d.length);var cy=pad.t+ch*(1-x.t/40);i===0?ctx.moveTo(cx2,cy):ctx.lineTo(cx2,cy);});ctx.stroke();ctx.fillStyle='#888';ctx.font='8px sans-serif';ctx.textAlign='center';d.forEach(function(x,i){ctx.fillText(x.m,pad.l+(i+0.5)*(cw/d.length),pad.t+ch+14);});})();</script>
+    </div>
+    <div style="background:var(--white);border-radius:12px;border:1px solid var(--border);padding:1.25rem;">
+      <div style="font-weight:500;margin-bottom:1rem;font-size:0.9rem;">🇮🇹 Maremma — Aug/Sep</div>
+      <canvas id="klima_overview_mar" style="width:100%;height:120px;display:block;"></canvas>
+      <script>(function(){var c=document.getElementById('klima_overview_mar');if(!c)return;var ctx=c.getContext('2d');var W=c.offsetWidth||240;c.width=W*devicePixelRatio;c.height=120*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio);var d=[{m:'Jun',t:24,r:28},{m:'Jul',t:28,r:12},{m:'Aug',t:29,r:15},{m:'Sep',t:25,r:55},{m:'Okt',t:20,r:78}];var pad={l:25,r:5,t:8,b:20};var cw=W-pad.l-pad.r,ch=120-pad.t-pad.b;d.forEach(function(x,i){var bx=pad.l+i*(cw/d.length)+2;ctx.fillStyle='rgba(43,126,161,0.5)';var rh=(x.r/80)*ch*0.8;ctx.beginPath();ctx.roundRect(bx,pad.t+ch-rh,cw/d.length-4,rh,[2,2,0,0]);ctx.fill();});ctx.beginPath();ctx.strokeStyle='#D4841A';ctx.lineWidth=2;d.forEach(function(x,i){var cx2=pad.l+(i+0.5)*(cw/d.length);var cy=pad.t+ch*(1-x.t/40);i===0?ctx.moveTo(cx2,cy):ctx.lineTo(cx2,cy);});ctx.stroke();ctx.fillStyle='#888';ctx.font='8px sans-serif';ctx.textAlign='center';d.forEach(function(x,i){ctx.fillText(x.m,pad.l+(i+0.5)*(cw/d.length),pad.t+ch+14);});})();</script>
+    </div>
+    <div style="background:var(--white);border-radius:12px;border:1px solid var(--border);padding:1.25rem;">
+      <div style="font-weight:500;margin-bottom:1rem;font-size:0.9rem;">🇮🇹 Gardasee — Aug/Sep</div>
+      <canvas id="klima_overview_gar" style="width:100%;height:120px;display:block;"></canvas>
+      <script>(function(){var c=document.getElementById('klima_overview_gar');if(!c)return;var ctx=c.getContext('2d');var W=c.offsetWidth||240;c.width=W*devicePixelRatio;c.height=120*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio);var d=[{m:'Jun',t:23,r:60},{m:'Jul',t:26,r:55},{m:'Aug',t:27,r:58},{m:'Sep',t:22,r:65},{m:'Okt',t:16,r:68}];var pad={l:25,r:5,t:8,b:20};var cw=W-pad.l-pad.r,ch=120-pad.t-pad.b;d.forEach(function(x,i){var bx=pad.l+i*(cw/d.length)+2;ctx.fillStyle='rgba(43,126,161,0.5)';var rh=(x.r/80)*ch*0.8;ctx.beginPath();ctx.roundRect(bx,pad.t+ch-rh,cw/d.length-4,rh,[2,2,0,0]);ctx.fill();});ctx.beginPath();ctx.strokeStyle='#D4841A';ctx.lineWidth=2;d.forEach(function(x,i){var cx2=pad.l+(i+0.5)*(cw/d.length);var cy=pad.t+ch*(1-x.t/40);i===0?ctx.moveTo(cx2,cy):ctx.lineTo(cx2,cy);});ctx.stroke();ctx.fillStyle='#888';ctx.font='8px sans-serif';ctx.textAlign='center';d.forEach(function(x,i){ctx.fillText(x.m,pad.l+(i+0.5)*(cw/d.length),pad.t+ch+14);});})();</script>
+    </div>
+  </div>
+</section>
+<div class="section-divider"></div>
 <!-- ÜBERSICHT -->
 <section id="uebersicht">
   <div class="section-label">Reiseziele 2026</div>
@@ -867,10 +1004,168 @@
     </div>
 
     <!-- Map -->
-    <div class="map-wrapper">
-      <iframe class="map-inner" src="https://www.openstreetmap.org/export/embed.html?bbox=13.4,44.7,14.1,45.5&layer=mapnik&marker=45.1,13.7" title="Karte Istrien, Kroatien"></iframe>
-      <div class="map-note">📍 Istrien, Nordwestkroatien — beliebte Basen: Poreč, Rovinj, Novigrad, Pula</div>
+<div class="map-wrapper">
+      <div id="map_istrien" style="width:100%;height:380px;"></div>
+      <div class="map-note" style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+        <span>📍 Istrien — Campingplätze, Strände & Ausflugsziele</span>
+        <span style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <span><span style="color:#C0392B;">●</span> Camping</span>
+          <span><span style="color:#1A5C7A;">●</span> Strand</span>
+          <span><span style="color:#D4841A;">●</span> Hotel</span>
+          <span><span style="color:#2D7A4F;">●</span> Ausflug</span>
+        </span>
+      </div>
+      <script>
+      (function(){
+        if(typeof L === 'undefined') return;
+        var map_istrien = L.map('map_istrien').setView([45.07, 13.72], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap', maxZoom: 18
+        }).addTo(map_istrien);
+        
+    L.circleMarker([45.19, 13.6], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Lanterna Premium Camping</b><br><small>🏕️ Top Camping Resort</small>');
+    L.circleMarker([45.18, 13.61], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Camping Polidor</b><br><small>🏕️ Familiencamping Funtana</small>');
+    L.circleMarker([45.06, 13.62], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Camping Vestar Rovinj</b><br><small>🏕️ Idyllische Bucht</small>');
+    L.circleMarker([44.82, 13.93], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Bijeca Sandstrand Medulin</b><br><small>🏖️ Bester Sandstrand Istriens</small>');
+    L.circleMarker([45.19, 13.6], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Val Adria Sandy Beach</b><br><small>🏖️ Privatstrand Lanterna</small>');
+    L.circleMarker([45.22, 13.58], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Strand Červar Porat</b><br><small>🏖️ Familienstrand Poreč</small>');
+    L.circleMarker([45.18, 13.62], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Dinopark Funtana</b><br><small>🎡 Dinosaurier & Fahrgeschäfte</small>');
+    L.circleMarker([45.22, 13.6], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Aquacolors Wasserpark</b><br><small>🎡 Größter Wasserpark Kroatiens</small>');
+    L.circleMarker([44.87, 13.85], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Amphitheater Pula</b><br><small>🏛️ Römisches Welterbe</small>');
+    L.circleMarker([45.23, 13.65], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Tropfsteinhöhle Baredine</b><br><small>🦇 Geführte Höhlentour</small>');
+    L.circleMarker([45.08, 13.64], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_istrien).bindPopup('<b>Altstadt Rovinj</b><br><small>🏘️ Venezianische Altstadt</small>');
+      })();
+      </script>
     </div>
+    <div style='margin-bottom:1.5rem;'><div class='section-label'>Fotogalerie</div><div class="gallery-grid"><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1555990793-da11153b2473?w=500&q=75&auto=format&fit=crop','Küste bei Rovinj')">
+        <img src="https://images.unsplash.com/photo-1555990793-da11153b2473?w=500&q=75&auto=format&fit=crop" alt="Küste bei Rovinj" loading="lazy"/>
+        <div class="gallery-cap">Küste bei Rovinj</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=500&q=75&auto=format&fit=crop','Kristallklares Adriawasser')">
+        <img src="https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=500&q=75&auto=format&fit=crop" alt="Kristallklares Adriawasser" loading="lazy"/>
+        <div class="gallery-cap">Kristallklares Adriawasser</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=500&q=75&auto=format&fit=crop','Familienurlaub am Meer')">
+        <img src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=500&q=75&auto=format&fit=crop" alt="Familienurlaub am Meer" loading="lazy"/>
+        <div class="gallery-cap">Familienurlaub am Meer</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=500&q=75&auto=format&fit=crop','Amphitheater Pula')">
+        <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=500&q=75&auto=format&fit=crop" alt="Amphitheater Pula" loading="lazy"/>
+        <div class="gallery-cap">Amphitheater Pula</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1533760881669-80db4d7b341f?w=500&q=75&auto=format&fit=crop','Camping am Meer')">
+        <img src="https://images.unsplash.com/photo-1533760881669-80db4d7b341f?w=500&q=75&auto=format&fit=crop" alt="Camping am Meer" loading="lazy"/>
+        <div class="gallery-cap">Camping am Meer</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=500&q=75&auto=format&fit=crop','Sonnenuntergang Adria')">
+        <img src="https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=500&q=75&auto=format&fit=crop" alt="Sonnenuntergang Adria" loading="lazy"/>
+        <div class="gallery-cap">Sonnenuntergang Adria</div>
+      </div></div></div>
+    <div class="klima-wrap">
+      <div class="klima-title">🌡️ Klimadiagramm — Ø Temperatur &amp; Niederschlag (mm)</div>
+      <canvas id="klima_istrien" style="width:100%;height:180px;display:block;"></canvas>
+      <div class="klima-legend" style="margin-top:0.75rem;">
+        <div class="klima-legend-item"><div class="klima-legend-dot" style="background:var(--sun);"></div>Temperatur (°C)</div>
+        <div class="klima-legend-item"><div class="klima-legend-dot" style="background:var(--ocean-light);"></div>Niederschlag (mm)</div>
+      </div>
+      <script>
+      (function(){
+        var canvas = document.getElementById('klima_istrien');
+        if(!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+        var temps = [7, 8, 11, 15, 19, 23, 26, 27, 23, 18, 13, 9];
+        var rains = [62, 55, 58, 55, 58, 45, 30, 38, 72, 82, 90, 75];
+        var W = canvas.offsetWidth || 600;
+        canvas.width = W * window.devicePixelRatio;
+        canvas.height = 180 * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        var pad = {l:30,r:10,t:10,b:30};
+        var cw = W - pad.l - pad.r;
+        var ch = 180 - pad.t - pad.b;
+        var n = months.length;
+        var bw = cw / n;
+        var maxTemp = 40, maxRain = 80;
+        ctx.clearRect(0,0,W,180);
+        // grid lines
+        ctx.strokeStyle='rgba(0,0,0,0.07)'; ctx.lineWidth=1;
+        [0,25,50,75,100].forEach(function(p){
+          var y = pad.t + ch*(1-p/100);
+          ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+        });
+        // rain bars
+        rains.forEach(function(r,i){
+          var h = (r/maxRain)*ch*0.8;
+          var x = pad.l + i*bw + bw*0.1;
+          var bW = bw*0.35;
+          ctx.fillStyle='rgba(43,126,161,0.55)';
+          ctx.beginPath();
+          ctx.roundRect(x, pad.t+ch-h, bW, h, [3,3,0,0]);
+          ctx.fill();
+        });
+        // temp line
+        ctx.beginPath(); ctx.strokeStyle='#D4841A'; ctx.lineWidth=2.5;
+        temps.forEach(function(t,i){
+          var x = pad.l + i*bw + bw*0.5;
+          var y = pad.t + ch*(1-t/maxTemp);
+          i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        // temp dots
+        temps.forEach(function(t,i){
+          var x = pad.l + i*bw + bw*0.5;
+          var y = pad.t + ch*(1-t/maxTemp);
+          ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2);
+          ctx.fillStyle='#D4841A'; ctx.fill();
+          ctx.fillStyle='#333'; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+          ctx.fillText(t+'°', x, y-7);
+        });
+        // month labels
+        ctx.fillStyle='#999'; ctx.font='9px sans-serif'; ctx.textAlign='center';
+        months.forEach(function(m,i){
+          var x = pad.l + i*bw + bw*0.5;
+          ctx.fillText(m, x, pad.t+ch+18);
+        });
+        // y-axis left (temp)
+        ctx.fillStyle='#D4841A'; ctx.font='8px sans-serif'; ctx.textAlign='right';
+        [0,10,20,30,40].forEach(function(v){
+          var y = pad.t + ch*(1-v/maxTemp);
+          ctx.fillText(v+'°', pad.l-3, y+3);
+        });
+      })();
+      </script>
+    </div>
+    <div class="section-label" style="margin-top:2rem;">Wusstest du?</div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:1.25rem;">Interessante Fakten</h3>
+    <div class="facts-grid"><div class="fact-card"><div class="fact-icon">🏛️</div><div class="fact-text"><strong>Römisches Erbe</strong>Istrien war über 500 Jahre Teil des Römischen Reiches — das Amphitheater in Pula ist eines der besterhaltenen weltweit und fasste 23.000 Zuschauer.</div></div><div class="fact-card"><div class="fact-icon">🫒</div><div class="fact-text"><strong>Trüffel-Hochburg</strong>Die Wälder rund um Motovun gelten als eines der weltbesten Trüffelgebiete. Der weiße Istrianische Trüffel wird für bis zu 4.000 €/kg gehandelt.</div></div><div class="fact-card"><div class="fact-icon">🌊</div><div class="fact-text"><strong>Wasserqualität</strong>Die Adria vor Istrien hat eine Sichttiefe von bis zu 30 m — das Wasser gehört zu den saubersten Meeren Europas (EU Blaue Flagge).</div></div><div class="fact-card"><div class="fact-icon">🇪🇺</div><div class="fact-text"><strong>Euro seit 2023</strong>Kroatien hat 2023 den Euro eingeführt und ist dem Schengen-Raum beigetreten — kein Geldwechsel, kein Grenzstop mehr nötig.</div></div><div class="fact-card"><div class="fact-icon">🦭</div><div class="fact-text"><strong>Delfine</strong>Vor der Istrianischen Küste leben rund 180 Große Tümmler. Delfinbeobachtungstouren ab Rovinj starten täglich.</div></div><div class="fact-card"><div class="fact-icon">🏖️</div><div class="fact-text"><strong>Küstenlänge</strong>Die istrianische Halbinsel hat über 500 km Küstenlinie mit mehr als 200 bewirtschafteten Stränden — für jeden Geschmack.</div></div></div>
 
     <!-- Content -->
     <div class="content-grid">
@@ -962,35 +1257,47 @@
 
     <!-- Route -->
     <div class="route-box">
-      <div class="route-title">🚗 Routenvorschlag Dortmund → Istrien (mit Übernachtung)</div>
+      <div class="route-title">🚗 Routenvorschlag Dortmund → Istrien — 2 Tage Anreise</div>
       <div class="route-steps">
-        <div class="route-step">
-          <div class="route-dot">1</div>
-          <div class="route-content">
-            <div class="route-place">Dortmund — Start (früh morgens, ~5:00 Uhr)</div>
-            <div class="route-info">Empfehlung: Früh starten, wenn das Kind noch schläft · Route: A45 → A3 → München</div>
-          </div>
+        <div class="route-step"><div class="route-dot">1</div><div class="route-content"><div class="route-place">Dortmund — Start (früh, ~5:00 Uhr)</div><div class="route-info">A45 → A3 → A8 → Salzburg · Kind schläft idealerweise noch im Auto</div></div></div>
+        <div class="route-step"><div class="route-dot">2</div><div class="route-content"><div class="route-place">Mittagspause: Salzburg (~5,5 Std.) · kurzer Spielplatz-Stopp</div><div class="route-info">Autobahnraststätte Salzburg Nord oder kurzer Abstecher in den Mirabellgarten (Spielplatz!)</div></div></div>
+        <div class="route-step"><div class="route-dot">3</div><div class="route-content"><div class="route-place">🛏️ Übernachtung: Ljubljana (~7–8 Std. Fahrzeit Tag 1)</div><div class="route-info">Familien-Hotel in Ljubljana · am nächsten Morgen entspannt weiter</div></div></div>
+        <div class="route-step"><div class="route-dot">4</div><div class="route-content"><div class="route-place">Tag 2: Ljubljana → Rijeka → Istrien (~3 Std.)</div><div class="route-info">Entspannter Anreisetag, mittags am Strand · Gesamtfahrt ~11 Std. aufgeteilt auf 2 Tage</div></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.25rem;">
+        <div>
+          <div style="font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ocean);margin-bottom:0.75rem;">🛏️ Zwischenstopp Hinfahrt</div>
+<div style="background:var(--sand);border-radius:10px;padding:1rem 1.25rem;border:1px solid var(--border);margin-bottom:0.75rem;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:500;font-size:0.88rem;">🏨 Dvor Tacen Guesthouse</div>
+      <div style="font-size:0.75rem;color:var(--sun);margin:0.1rem 0;">★★★★</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Tacenska 119, Ljubljana</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-size:0.78rem;color:var(--green);font-weight:500;">~90–120 €/Nacht</div>
+    </div>
+  </div>
+  <div style="font-size:0.78rem;margin-top:0.5rem;padding:0.4rem 0.6rem;background:var(--ocean-pale);border-radius:6px;color:var(--ocean);">✓ Spielplatz direkt am Fluss + eigenes Restaurant mit Kindermenü nebenan</div>
+  <a href="https://www.booking.com/hotel/si/dvor-tacen.de.html" target="_blank" style="font-size:0.75rem;color:var(--ocean);text-decoration:none;display:inline-block;margin-top:0.4rem;">→ Jetzt ansehen</a>
+</div>
         </div>
-        <div class="route-step">
-          <div class="route-dot">2</div>
-          <div class="route-content">
-            <div class="route-place">Pause: Salzburg oder Innsbruck (~5,5 Std.)</div>
-            <div class="route-info">Mittagsstopp, Kinderpause, Oldstadt Salzburg bei Interesse · ~400 km</div>
-          </div>
-        </div>
-        <div class="route-step">
-          <div class="route-dot">3</div>
-          <div class="route-content">
-            <div class="route-place">Übernachtung: Ljubljana oder Rijeka (Tag 1)</div>
-            <div class="route-info">Hotel für 1 Nacht empfohlen bei Fahrt mit Kleinkind (~7–8 Std. 1. Tag) · Budget ~80–120 €</div>
-          </div>
-        </div>
-        <div class="route-step">
-          <div class="route-dot">4</div>
-          <div class="route-content">
-            <div class="route-place">Tag 2: Rijeka → Istrien (Poreč / Rovinj) — ~2–3 Std.</div>
-            <div class="route-info">Entspannter Anreisetag, nachmittags am Strand · Gesamtfahrt ~11 Std. aufgeteilt</div>
-          </div>
+        <div>
+          <div style="font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ocean);margin-bottom:0.75rem;">🛏️ Zwischenstopp Rückfahrt</div>
+<div style="background:var(--sand);border-radius:10px;padding:1rem 1.25rem;border:1px solid var(--border);margin-bottom:0.75rem;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:500;font-size:0.88rem;">🏨 Familiengasthof Maier</div>
+      <div style="font-size:0.75rem;color:var(--sun);margin:0.1rem 0;">★★★</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Mautern, Steiermark (1 km A9)</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-size:0.78rem;color:var(--green);font-weight:500;">~70–100 €/Nacht</div>
+    </div>
+  </div>
+  <div style="font-size:0.78rem;margin-top:0.5rem;padding:0.4rem 0.6rem;background:var(--ocean-pale);border-radius:6px;color:var(--ocean);">✓ Familiensuite, Kinderspielplatz, 3 km vom Erlebnispark Wilder Berg</div>
+  <a href="https://www.booking.com/hotel/at/familiengasthof-maier.de.html" target="_blank" style="font-size:0.75rem;color:var(--ocean);text-decoration:none;display:inline-block;margin-top:0.4rem;">→ Jetzt ansehen</a>
+</div>
         </div>
       </div>
     </div>
@@ -1052,10 +1359,164 @@
       </div>
     </div>
 
-    <div class="map-wrapper">
-      <iframe class="map-inner" src="https://www.openstreetmap.org/export/embed.html?bbox=3.0,43.0,4.5,43.8&layer=mapnik&marker=43.4,3.7" title="Karte Languedoc-Roussillon, Frankreich"></iframe>
-      <div class="map-note">📍 Languedoc-Roussillon, Südfrankreich — beliebte Basen: Sérignan-Plage, Agde, Marseillan-Plage, Narbonne-Plage</div>
+<div class="map-wrapper">
+      <div id="map_languedoc" style="width:100%;height:380px;"></div>
+      <div class="map-note" style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+        <span>📍 Languedoc — Campingplätze, Strände & Ausflugsziele</span>
+        <span style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <span><span style="color:#C0392B;">●</span> Camping</span>
+          <span><span style="color:#1A5C7A;">●</span> Strand</span>
+          <span><span style="color:#D4841A;">●</span> Hotel</span>
+          <span><span style="color:#2D7A4F;">●</span> Ausflug</span>
+        </span>
+      </div>
+      <script>
+      (function(){
+        if(typeof L === 'undefined') return;
+        var map_languedoc = L.map('map_languedoc').setView([43.38, 3.55], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap', maxZoom: 18
+        }).addTo(map_languedoc);
+        
+    L.circleMarker([43.27, 3.3], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Yelloh! Village Le Sérignan</b><br><small>🏕️ Direkt am Sandstrand</small>');
+    L.circleMarker([43.28, 3.35], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Camping Sunêlia Les Sablons</b><br><small>🏕️ Aquapark & Lagune</small>');
+    L.circleMarker([43.31, 3.55], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Les Méditerranées Nouvelle Floride</b><br><small>🏕️ Sandstrand, 3 Rutschen</small>');
+    L.circleMarker([43.26, 3.3], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Strand Sérignan-Plage</b><br><small>🏖️ Langer Sandstrand, flach</small>');
+    L.circleMarker([43.31, 3.55], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Marseillan-Plage</b><br><small>🏖️ Ruhige Lagune, ideal für Kleinkind</small>');
+    L.circleMarker([43.29, 3.41], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Vias-Plage</b><br><small>🏖️ Familienfreundlicher Sandstrand</small>');
+    L.circleMarker([43.95, 4.53], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Pont du Gard</b><br><small>🏛️ Römisches UNESCO-Aquädukt</small>');
+    L.circleMarker([43.21, 2.35], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Cité de Carcassonne</b><br><small>🏰 Mittelalterliche Burgstadt</small>');
+    L.circleMarker([43.43, 3.6], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Parc des Dinosaures Mèze</b><br><small>🦕 Dinopark für Kinder</small>');
+    L.circleMarker([43.32, 3.45], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_languedoc).bindPopup('<b>Canal du Midi</b><br><small>⛵ UNESCO-Kanal, Bootstouren</small>');
+      })();
+      </script>
     </div>
+    <div style='margin-bottom:1.5rem;'><div class='section-label'>Fotogalerie</div><div class="gallery-grid"><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=75&auto=format&fit=crop','Sandstrand Languedoc')">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=75&auto=format&fit=crop" alt="Sandstrand Languedoc" loading="lazy"/>
+        <div class="gallery-cap">Sandstrand Languedoc</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1499678329028-101435549a4e?w=500&q=75&auto=format&fit=crop','Mediterrane Küste Südfrankreich')">
+        <img src="https://images.unsplash.com/photo-1499678329028-101435549a4e?w=500&q=75&auto=format&fit=crop" alt="Mediterrane Küste Südfrankreich" loading="lazy"/>
+        <div class="gallery-cap">Mediterrane Küste Südfrankreich</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=500&q=75&auto=format&fit=crop','Pont du Gard')">
+        <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?w=500&q=75&auto=format&fit=crop" alt="Pont du Gard" loading="lazy"/>
+        <div class="gallery-cap">Pont du Gard</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=75&auto=format&fit=crop','Mittelmeer Frankreich')">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=75&auto=format&fit=crop" alt="Mittelmeer Frankreich" loading="lazy"/>
+        <div class="gallery-cap">Mittelmeer Frankreich</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1533760881669-80db4d7b341f?w=500&q=75&auto=format&fit=crop','Camping am Meer')">
+        <img src="https://images.unsplash.com/photo-1533760881669-80db4d7b341f?w=500&q=75&auto=format&fit=crop" alt="Camping am Meer" loading="lazy"/>
+        <div class="gallery-cap">Camping am Meer</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=75&auto=format&fit=crop','Carcassonne Altstadt')">
+        <img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=75&auto=format&fit=crop" alt="Carcassonne Altstadt" loading="lazy"/>
+        <div class="gallery-cap">Carcassonne Altstadt</div>
+      </div></div></div>
+    <div class="klima-wrap">
+      <div class="klima-title">🌡️ Klimadiagramm — Ø Temperatur &amp; Niederschlag (mm)</div>
+      <canvas id="klima_languedoc" style="width:100%;height:180px;display:block;"></canvas>
+      <div class="klima-legend" style="margin-top:0.75rem;">
+        <div class="klima-legend-item"><div class="klima-legend-dot" style="background:var(--sun);"></div>Temperatur (°C)</div>
+        <div class="klima-legend-item"><div class="klima-legend-dot" style="background:var(--ocean-light);"></div>Niederschlag (mm)</div>
+      </div>
+      <script>
+      (function(){
+        var canvas = document.getElementById('klima_languedoc');
+        if(!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+        var temps = [8, 9, 12, 15, 19, 23, 28, 29, 24, 19, 12, 9];
+        var rains = [55, 48, 42, 50, 45, 28, 15, 18, 55, 75, 68, 60];
+        var W = canvas.offsetWidth || 600;
+        canvas.width = W * window.devicePixelRatio;
+        canvas.height = 180 * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        var pad = {l:30,r:10,t:10,b:30};
+        var cw = W - pad.l - pad.r;
+        var ch = 180 - pad.t - pad.b;
+        var n = months.length;
+        var bw = cw / n;
+        var maxTemp = 40, maxRain = 80;
+        ctx.clearRect(0,0,W,180);
+        // grid lines
+        ctx.strokeStyle='rgba(0,0,0,0.07)'; ctx.lineWidth=1;
+        [0,25,50,75,100].forEach(function(p){
+          var y = pad.t + ch*(1-p/100);
+          ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+        });
+        // rain bars
+        rains.forEach(function(r,i){
+          var h = (r/maxRain)*ch*0.8;
+          var x = pad.l + i*bw + bw*0.1;
+          var bW = bw*0.35;
+          ctx.fillStyle='rgba(43,126,161,0.55)';
+          ctx.beginPath();
+          ctx.roundRect(x, pad.t+ch-h, bW, h, [3,3,0,0]);
+          ctx.fill();
+        });
+        // temp line
+        ctx.beginPath(); ctx.strokeStyle='#D4841A'; ctx.lineWidth=2.5;
+        temps.forEach(function(t,i){
+          var x = pad.l + i*bw + bw*0.5;
+          var y = pad.t + ch*(1-t/maxTemp);
+          i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        // temp dots
+        temps.forEach(function(t,i){
+          var x = pad.l + i*bw + bw*0.5;
+          var y = pad.t + ch*(1-t/maxTemp);
+          ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2);
+          ctx.fillStyle='#D4841A'; ctx.fill();
+          ctx.fillStyle='#333'; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+          ctx.fillText(t+'°', x, y-7);
+        });
+        // month labels
+        ctx.fillStyle='#999'; ctx.font='9px sans-serif'; ctx.textAlign='center';
+        months.forEach(function(m,i){
+          var x = pad.l + i*bw + bw*0.5;
+          ctx.fillText(m, x, pad.t+ch+18);
+        });
+        // y-axis left (temp)
+        ctx.fillStyle='#D4841A'; ctx.font='8px sans-serif'; ctx.textAlign='right';
+        [0,10,20,30,40].forEach(function(v){
+          var y = pad.t + ch*(1-v/maxTemp);
+          ctx.fillText(v+'°', pad.l-3, y+3);
+        });
+      })();
+      </script>
+    </div>
+    <div class="section-label" style="margin-top:2rem;">Wusstest du?</div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:1.25rem;">Interessante Fakten</h3>
+    <div class="facts-grid"><div class="fact-card"><div class="fact-icon">☀️</div><div class="fact-text"><strong>Sonnigste Region</strong>Das Languedoc verzeichnet über 300 Sonnentage pro Jahr — mehr als die Côte d'Azur. Sète und Agde gehören zu den sonnenreichsten Orten Frankreichs.</div></div><div class="fact-card"><div class="fact-icon">🍷</div><div class="fact-text"><strong>Größtes Weinanbaugebiet</strong>Das Languedoc-Roussillon ist das größte Weinanbaugebiet der Welt — über 240.000 Hektar Reben produzieren 1/3 des gesamten französischen Weins.</div></div><div class="fact-card"><div class="fact-icon">🏛️</div><div class="fact-text"><strong>Pont du Gard</strong>Das römische Aquädukt Pont du Gard ist fast 49 m hoch und transportierte täglich 40.000 m³ Wasser über 50 km — seit 2.000 Jahren steht es ohne Mörtel.</div></div><div class="fact-card"><div class="fact-icon">🌬️</div><div class="fact-text"><strong>Tramontane</strong>Der Tramontane ist ein Nordwestwind, der bis zu 130 km/h erreichen kann — er sorgt aber auch für besonders klare Luft und trockenes Wetter.</div></div><div class="fact-card"><div class="fact-icon">🦩</div><div class="fact-text"><strong>Flamingos</strong>In der Camargue, 1,5 Std. von Sérignan, leben 10.000–15.000 Flamingos wild. Ein unvergesslicher Tagesausflug für die ganze Familie.</div></div><div class="fact-card"><div class="fact-icon">🏰</div><div class="fact-text"><strong>Carcassonne</strong>Die befestigte Altstadt Carcassonne mit ihren 52 Türmen gilt als besterhaltene mittelalterliche Festungsstadt Europas — und diente als Vorbild für Disneys Schloss.</div></div></div>
 
     <div class="content-grid">
 
@@ -1145,35 +1606,47 @@
     </div>
 
     <div class="route-box">
-      <div class="route-title">🚗 Routenvorschlag Dortmund → Languedoc (direkte Fahrt möglich)</div>
+      <div class="route-title">🚗 Routenvorschlag Dortmund → Languedoc — 2 Tage Anreise</div>
       <div class="route-steps">
-        <div class="route-step">
-          <div class="route-dot">1</div>
-          <div class="route-content">
-            <div class="route-place">Dortmund — Start (früh, ~4:00–5:00 Uhr)</div>
-            <div class="route-info">Route: A45 → A3 → A5 Richtung Basel</div>
-          </div>
+        <div class="route-step"><div class="route-dot">1</div><div class="route-content"><div class="route-place">Dortmund — Start (früh, ~4:00–5:00 Uhr)</div><div class="route-info">A45 → A3 → A5 Richtung Basel · keine Alpenüberquerung</div></div></div>
+        <div class="route-step"><div class="route-dot">2</div><div class="route-content"><div class="route-place">Pause: Basel (~3,5 Std.) · Spielplatz am Rheinufer</div><div class="route-info">Kurze Kinderpause am Rheinufer Basel oder Rastplatz mit Spielplatz nahe Freiburg</div></div></div>
+        <div class="route-step"><div class="route-dot">3</div><div class="route-content"><div class="route-place">🛏️ Übernachtung: Lyon (~6–7 Std. Fahrzeit Tag 1)</div><div class="route-info">Familien-Hotel Lyon Nordseite · A6/A7-nah, kostenlose Parkplätze</div></div></div>
+        <div class="route-step"><div class="route-dot">4</div><div class="route-content"><div class="route-place">Tag 2: Lyon → Montélimar → Sérignan (~4 Std.)</div><div class="route-info">Entspannte Fahrt, Mittagsstopp in Montélimar (Nougat-Stadt!), nachmittags Meer</div></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.25rem;">
+        <div>
+          <div style="font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ocean);margin-bottom:0.75rem;">🛏️ Zwischenstopp Hinfahrt</div>
+<div style="background:var(--sand);border-radius:10px;padding:1rem 1.25rem;border:1px solid var(--border);margin-bottom:0.75rem;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:500;font-size:0.88rem;">🏨 Novotel Lyon Gerland</div>
+      <div style="font-size:0.75rem;color:var(--sun);margin:0.1rem 0;">★★★★</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">70 av. Leclerc, Lyon (A7-nah)</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-size:0.78rem;color:var(--green);font-weight:500;">~95–130 €/Nacht</div>
+    </div>
+  </div>
+  <div style="font-size:0.78rem;margin-top:0.5rem;padding:0.4rem 0.6rem;background:var(--ocean-pale);border-radius:6px;color:var(--ocean);">✓ Familienzimmer für 4 Pers., Spielecke, Pool, Kindermenü im Restaurant, Gratisparken</div>
+  <a href="https://www.novotel.com/de/hotel-0736-novotel-lyon-gerland/index.shtml" target="_blank" style="font-size:0.75rem;color:var(--ocean);text-decoration:none;display:inline-block;margin-top:0.4rem;">→ Jetzt ansehen</a>
+</div>
         </div>
-        <div class="route-step">
-          <div class="route-dot">2</div>
-          <div class="route-content">
-            <div class="route-place">Pause/Zwischenstopp: Basel oder Strasbourg (~3,5 Std.)</div>
-            <div class="route-info">Frühstückspause, kein Alpenpass nötig — reine Autobahn bis ans Ziel</div>
-          </div>
-        </div>
-        <div class="route-step">
-          <div class="route-dot">3</div>
-          <div class="route-content">
-            <div class="route-place">Pause: Lyon (~6 Std. ab Start)</div>
-            <div class="route-info">Mittagspause in der Gastronomie-Hauptstadt Frankreichs, 20–30 Min. Pause</div>
-          </div>
-        </div>
-        <div class="route-step">
-          <div class="route-dot">4</div>
-          <div class="route-content">
-            <div class="route-place">Ziel: Sérignan / Agde / Marseillan (~10–11 Std.)</div>
-            <div class="route-info">Alternativ: Übernachtung in Nîmes (empfohlen bei früher Müdigkeit) · Budget Hotel ~70–100 €</div>
-          </div>
+        <div>
+          <div style="font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ocean);margin-bottom:0.75rem;">🛏️ Zwischenstopp Rückfahrt</div>
+<div style="background:var(--sand);border-radius:10px;padding:1rem 1.25rem;border:1px solid var(--border);margin-bottom:0.75rem;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:500;font-size:0.88rem;">🏨 B&B Hotel Montélimar Sud</div>
+      <div style="font-size:0.75rem;color:var(--sun);margin:0.1rem 0;">★★★</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">A7-Ausfahrt Montélimar Sud</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-size:0.78rem;color:var(--green);font-weight:500;">~65–85 €/Nacht</div>
+    </div>
+  </div>
+  <div style="font-size:0.78rem;margin-top:0.5rem;padding:0.4rem 0.6rem;background:var(--ocean-pale);border-radius:6px;color:var(--ocean);">✓ Familienzimmer, kostenlose Parkplätze direkt an der Autobahn, Restaurant nebenan</div>
+  <a href="https://www.hotel-bb.com/de/hotel/montelimar-sud" target="_blank" style="font-size:0.75rem;color:var(--ocean);text-decoration:none;display:inline-block;margin-top:0.4rem;">→ Jetzt ansehen</a>
+</div>
         </div>
       </div>
     </div>
@@ -1234,10 +1707,164 @@
       </div>
     </div>
 
-    <div class="map-wrapper">
-      <iframe class="map-inner" src="https://www.openstreetmap.org/export/embed.html?bbox=10.8,42.5,11.5,43.0&layer=mapnik&marker=42.77,10.88" title="Karte Maremma, Toskana, Italien"></iframe>
-      <div class="map-note">📍 Maremma, Provinz Grosseto, Toskana — Basis: Castiglione della Pescaia, Principina a Mare</div>
+<div class="map-wrapper">
+      <div id="map_maremma" style="width:100%;height:380px;"></div>
+      <div class="map-note" style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+        <span>📍 Maremma — Campingplätze, Strände & Ausflugsziele</span>
+        <span style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <span><span style="color:#C0392B;">●</span> Camping</span>
+          <span><span style="color:#1A5C7A;">●</span> Strand</span>
+          <span><span style="color:#D4841A;">●</span> Hotel</span>
+          <span><span style="color:#2D7A4F;">●</span> Ausflug</span>
+        </span>
+      </div>
+      <script>
+      (function(){
+        if(typeof L === 'undefined') return;
+        var map_maremma = L.map('map_maremma').setView([42.78, 11.0], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap', maxZoom: 18
+        }).addTo(map_maremma);
+        
+    L.circleMarker([42.78, 10.87], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Camping Maremma Sans Souci</b><br><small>🏕️ Privatstrand, Blaue Flagge</small>');
+    L.circleMarker([42.77, 10.89], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Camping Village Baia Azzurra</b><br><small>🏕️ 2 Pools, Panoramablick</small>');
+    L.circleMarker([42.69, 11.02], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Spiaggia Principina a Mare</b><br><small>🏖️ Langer Naturstrand</small>');
+    L.circleMarker([42.45, 11.42], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Spiaggia di Capalbio</b><br><small>🏖️ Ruhiger Sandstrand</small>');
+    L.circleMarker([42.4, 11.14], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Cala Civette Argentario</b><br><small>🏖️ Kristallklares Wasser</small>');
+    L.circleMarker([42.63, 11.12], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Parco Regionale della Maremma</b><br><small>🌿 Naturpark mit Ranger-Führungen</small>');
+    L.circleMarker([42.63, 11.67], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Pitigliano</b><br><small>🏘️ Tuffstein-Stadtauf Fels</small>');
+    L.circleMarker([42.65, 11.51], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Terme di Saturnia</b><br><small>♨️ Kostenlose heiße Quellen</small>');
+    L.circleMarker([42.77, 10.88], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Castiglione della Pescaia</b><br><small>🏰 Mittelalterliche Burgstadt</small>');
+    L.circleMarker([42.92, 10.53], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_maremma).bindPopup('<b>Fährhafen Piombino</b><br><small>⛴️ Fähre nach Elba</small>');
+      })();
+      </script>
     </div>
+    <div style='margin-bottom:1.5rem;'><div class='section-label'>Fotogalerie</div><div class="gallery-grid"><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=500&q=75&auto=format&fit=crop','Toskanische Küste')">
+        <img src="https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=500&q=75&auto=format&fit=crop" alt="Toskanische Küste" loading="lazy"/>
+        <div class="gallery-cap">Toskanische Küste</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1543429658-b87baa3c9982?w=500&q=75&auto=format&fit=crop','Sandstrand im Pinienwald')">
+        <img src="https://images.unsplash.com/photo-1543429658-b87baa3c9982?w=500&q=75&auto=format&fit=crop" alt="Sandstrand im Pinienwald" loading="lazy"/>
+        <div class="gallery-cap">Sandstrand im Pinienwald</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1534445867742-43195f401b6c?w=500&q=75&auto=format&fit=crop','Maremma Naturpark')">
+        <img src="https://images.unsplash.com/photo-1534445867742-43195f401b6c?w=500&q=75&auto=format&fit=crop" alt="Maremma Naturpark" loading="lazy"/>
+        <div class="gallery-cap">Maremma Naturpark</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?w=500&q=75&auto=format&fit=crop','Toskana Hügel')">
+        <img src="https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?w=500&q=75&auto=format&fit=crop" alt="Toskana Hügel" loading="lazy"/>
+        <div class="gallery-cap">Toskana Hügel</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=500&q=75&auto=format&fit=crop','Terme di Saturnia')">
+        <img src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=500&q=75&auto=format&fit=crop" alt="Terme di Saturnia" loading="lazy"/>
+        <div class="gallery-cap">Terme di Saturnia</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500&q=75&auto=format&fit=crop','Italienische Küste')">
+        <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500&q=75&auto=format&fit=crop" alt="Italienische Küste" loading="lazy"/>
+        <div class="gallery-cap">Italienische Küste</div>
+      </div></div></div>
+    <div class="klima-wrap">
+      <div class="klima-title">🌡️ Klimadiagramm — Ø Temperatur &amp; Niederschlag (mm)</div>
+      <canvas id="klima_maremma" style="width:100%;height:180px;display:block;"></canvas>
+      <div class="klima-legend" style="margin-top:0.75rem;">
+        <div class="klima-legend-item"><div class="klima-legend-dot" style="background:var(--sun);"></div>Temperatur (°C)</div>
+        <div class="klima-legend-item"><div class="klima-legend-dot" style="background:var(--ocean-light);"></div>Niederschlag (mm)</div>
+      </div>
+      <script>
+      (function(){
+        var canvas = document.getElementById('klima_maremma');
+        if(!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+        var temps = [9, 10, 13, 16, 20, 24, 28, 29, 25, 20, 14, 10];
+        var rains = [68, 60, 55, 52, 45, 28, 12, 15, 55, 78, 90, 72];
+        var W = canvas.offsetWidth || 600;
+        canvas.width = W * window.devicePixelRatio;
+        canvas.height = 180 * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        var pad = {l:30,r:10,t:10,b:30};
+        var cw = W - pad.l - pad.r;
+        var ch = 180 - pad.t - pad.b;
+        var n = months.length;
+        var bw = cw / n;
+        var maxTemp = 40, maxRain = 80;
+        ctx.clearRect(0,0,W,180);
+        // grid lines
+        ctx.strokeStyle='rgba(0,0,0,0.07)'; ctx.lineWidth=1;
+        [0,25,50,75,100].forEach(function(p){
+          var y = pad.t + ch*(1-p/100);
+          ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+        });
+        // rain bars
+        rains.forEach(function(r,i){
+          var h = (r/maxRain)*ch*0.8;
+          var x = pad.l + i*bw + bw*0.1;
+          var bW = bw*0.35;
+          ctx.fillStyle='rgba(43,126,161,0.55)';
+          ctx.beginPath();
+          ctx.roundRect(x, pad.t+ch-h, bW, h, [3,3,0,0]);
+          ctx.fill();
+        });
+        // temp line
+        ctx.beginPath(); ctx.strokeStyle='#D4841A'; ctx.lineWidth=2.5;
+        temps.forEach(function(t,i){
+          var x = pad.l + i*bw + bw*0.5;
+          var y = pad.t + ch*(1-t/maxTemp);
+          i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        // temp dots
+        temps.forEach(function(t,i){
+          var x = pad.l + i*bw + bw*0.5;
+          var y = pad.t + ch*(1-t/maxTemp);
+          ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2);
+          ctx.fillStyle='#D4841A'; ctx.fill();
+          ctx.fillStyle='#333'; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+          ctx.fillText(t+'°', x, y-7);
+        });
+        // month labels
+        ctx.fillStyle='#999'; ctx.font='9px sans-serif'; ctx.textAlign='center';
+        months.forEach(function(m,i){
+          var x = pad.l + i*bw + bw*0.5;
+          ctx.fillText(m, x, pad.t+ch+18);
+        });
+        // y-axis left (temp)
+        ctx.fillStyle='#D4841A'; ctx.font='8px sans-serif'; ctx.textAlign='right';
+        [0,10,20,30,40].forEach(function(v){
+          var y = pad.t + ch*(1-v/maxTemp);
+          ctx.fillText(v+'°', pad.l-3, y+3);
+        });
+      })();
+      </script>
+    </div>
+    <div class="section-label" style="margin-top:2rem;">Wusstest du?</div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:1.25rem;">Interessante Fakten</h3>
+    <div class="facts-grid"><div class="fact-card"><div class="fact-icon">🐎</div><div class="fact-text"><strong>Wilde Pferde</strong>Im Naturpark Maremma leben die letzten wilden Maremma-Pferde Italiens — die berühmten Butteri (toskanische Cowboys) hüten sie bis heute zu Pferd.</div></div><div class="fact-card"><div class="fact-icon">🏖️</div><div class="fact-text"><strong>Pinienwald-Strände</strong>Die Maremma-Küste ist für ihre Pinien unmittelbar hinter dem Sandstrand bekannt — natürlicher Sonnenschutz und ein einzigartiges Urlaubsgefühl.</div></div><div class="fact-card"><div class="fact-icon">♨️</div><div class="fact-text"><strong>Saturnia gratis</strong>Die Terme di Saturnia sprudeln seit Jahrtausenden — 37°C warmes Schwefelthermalwasser, öffentlich zugänglich, kostenlos, 24 Stunden am Tag.</div></div><div class="fact-card"><div class="fact-icon">🍷</div><div class="fact-text"><strong>Morellino di Scansano</strong>Der Morellino di Scansano ist der bekannteste Rotwein der Maremma — ein Sangiovese-Wein mit DOC-Zertifikat, direkt ab Weingut erhältlich.</div></div><div class="fact-card"><div class="fact-icon">🦅</div><div class="fact-text"><strong>Vogelparadies</strong>Der Maremma-Naturpark beherbergt über 200 Vogelarten — darunter Fischadler, Seeadler und den seltenen Purpurreiher. Vogelbeobachtung vom Boot aus möglich.</div></div><div class="fact-card"><div class="fact-icon">🏰</div><div class="fact-text"><strong>Ferragosto-Tipp</strong>Ab dem 15. August reisen die meisten Italiener in die Ferien. Vorher extrem voll — genau danach (also für euren Zeitraum ab 22.8.) wird es deutlich ruhiger.</div></div></div>
 
     <div class="content-grid">
 
@@ -1322,35 +1949,47 @@
     </div>
 
     <div class="route-box">
-      <div class="route-title">🚗 Routenvorschlag Dortmund → Maremma (mit Zwischenstopp)</div>
+      <div class="route-title">🚗 Routenvorschlag Dortmund → Maremma — 2 Tage Anreise</div>
       <div class="route-steps">
-        <div class="route-step">
-          <div class="route-dot">1</div>
-          <div class="route-content">
-            <div class="route-place">Dortmund → Innsbruck (~6 Std.)</div>
-            <div class="route-info">A45 → A8 → A93 → Innsbruck · Mittagsstopp empfohlen</div>
-          </div>
+        <div class="route-step"><div class="route-dot">1</div><div class="route-content"><div class="route-place">Dortmund → Innsbruck (~6 Std.) · Mittagspause</div><div class="route-info">A45 → A8 → A93 · Pause nahe München oder Rosenheim mit Rastplatz-Spielplatz</div></div></div>
+        <div class="route-step"><div class="route-dot">2</div><div class="route-content"><div class="route-place">🛏️ Übernachtung: Verona / Peschiera del Garda (~8 Std. Tag 1)</div><div class="route-info">Familien-Hotel Gardasee-nah · A4/A22-Kreuzung, ideal gelegen</div></div></div>
+        <div class="route-step"><div class="route-dot">3</div><div class="route-content"><div class="route-place">Tag 2: Verona → Florenz → Maremma (~5 Std.)</div><div class="route-info">A1 Richtung Süden, optionaler Stopp Florenz Autogrill, dann A12 → Maremmaküste</div></div></div>
+        <div class="route-step"><div class="route-dot">4</div><div class="route-content"><div class="route-place">Ankunft: Castiglione della Pescaia (~13 Std. gesamt / 2 Tage)</div><div class="route-info">Sehr entspannte Aufteilung: ~8 + ~5 Stunden</div></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.25rem;">
+        <div>
+          <div style="font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ocean);margin-bottom:0.75rem;">🛏️ Zwischenstopp Hinfahrt</div>
+<div style="background:var(--sand);border-radius:10px;padding:1rem 1.25rem;border:1px solid var(--border);margin-bottom:0.75rem;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:500;font-size:0.88rem;">🏨 Hotel Bella Lazise</div>
+      <div style="font-size:0.75rem;color:var(--sun);margin:0.1rem 0;">★★★</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Lazise, Gardasee (A4/A22-nah)</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-size:0.78rem;color:var(--green);font-weight:500;">~80–110 €/Nacht</div>
+    </div>
+  </div>
+  <div style="font-size:0.78rem;margin-top:0.5rem;padding:0.4rem 0.6rem;background:var(--ocean-pale);border-radius:6px;color:var(--ocean);">✓ Spielplatz im Garten, Pool, kinderfreundlich, 5 Min. zur Autobahn, Gardaland in der Nähe</div>
+  <a href="https://hotel-bellalazise.it/de" target="_blank" style="font-size:0.75rem;color:var(--ocean);text-decoration:none;display:inline-block;margin-top:0.4rem;">→ Jetzt ansehen</a>
+</div>
         </div>
-        <div class="route-step">
-          <div class="route-dot">2</div>
-          <div class="route-content">
-            <div class="route-place">Übernachtung: Verona oder Brescia</div>
-            <div class="route-info">Gute Optionen am Autobahnring, Budget Hotel ~80–100 €, abends kurz die Arena di Verona ansehen</div>
-          </div>
-        </div>
-        <div class="route-step">
-          <div class="route-dot">3</div>
-          <div class="route-content">
-            <div class="route-place">Tag 2: Verona → Florenz → Maremma (~5 Std.)</div>
-            <div class="route-info">A1 Richtung Süden, optionaler Halt in Florenz, dann A12 → Maremmaküste</div>
-          </div>
-        </div>
-        <div class="route-step">
-          <div class="route-dot">4</div>
-          <div class="route-content">
-            <div class="route-place">Ankunft: Castiglione della Pescaia</div>
-            <div class="route-info">Gesamtfahrt aufgeteilt: ~7 + ~5 Stunden — sehr entspannt mit Kleinkind</div>
-          </div>
+        <div>
+          <div style="font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ocean);margin-bottom:0.75rem;">🛏️ Zwischenstopp Rückfahrt</div>
+<div style="background:var(--sand);border-radius:10px;padding:1rem 1.25rem;border:1px solid var(--border);margin-bottom:0.75rem;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:500;font-size:0.88rem;">🏨 Hotel Bella Lazise</div>
+      <div style="font-size:0.75rem;color:var(--sun);margin:0.1rem 0;">★★★</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Lazise, Gardasee (Rückfahrt)</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-size:0.78rem;color:var(--green);font-weight:500;">~80–110 €/Nacht</div>
+    </div>
+  </div>
+  <div style="font-size:0.78rem;margin-top:0.5rem;padding:0.4rem 0.6rem;background:var(--ocean-pale);border-radius:6px;color:var(--ocean);">✓ Gleiche Route — ideal auch für Rückfahrt-Übernachtung, Pool & Spielplatz warten</div>
+  <a href="https://hotel-bellalazise.it/de" target="_blank" style="font-size:0.75rem;color:var(--ocean);text-decoration:none;display:inline-block;margin-top:0.4rem;">→ Jetzt ansehen</a>
+</div>
         </div>
       </div>
     </div>
@@ -1411,10 +2050,164 @@
       </div>
     </div>
 
-    <div class="map-wrapper">
-      <iframe class="map-inner" src="https://www.openstreetmap.org/export/embed.html?bbox=10.5,45.3,10.9,45.7&layer=mapnik&marker=45.55,10.7" title="Karte Gardasee, Italien"></iframe>
-      <div class="map-note">📍 Gardasee, Venetien/Lombardei — beliebte Basen: Lazise, Bardolino, Peschiera del Garda (Südostseite)</div>
+<div class="map-wrapper">
+      <div id="map_gardasee" style="width:100%;height:380px;"></div>
+      <div class="map-note" style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+        <span>📍 Gardasee — Campingplätze, Strände & Ausflugsziele</span>
+        <span style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <span><span style="color:#C0392B;">●</span> Camping</span>
+          <span><span style="color:#1A5C7A;">●</span> Strand</span>
+          <span><span style="color:#D4841A;">●</span> Hotel</span>
+          <span><span style="color:#2D7A4F;">●</span> Ausflug</span>
+        </span>
+      </div>
+      <script>
+      (function(){
+        if(typeof L === 'undefined') return;
+        var map_gardasee = L.map('map_gardasee').setView([45.52, 10.72], 11);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap', maxZoom: 18
+        }).addTo(map_gardasee);
+        
+    L.circleMarker([45.52, 10.73], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>Camping Cisano San Vito</b><br><small>🏕️ Lagune, Pools, Sandstrand</small>');
+    L.circleMarker([45.5, 10.73], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>Camping La Quercia Lazise</b><br><small>🏕️ Direkt am See, Topbewertung</small>');
+    L.circleMarker([45.54, 10.73], {
+      radius: 8, fillColor: '#C0392B', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>La Rocca Camping Village</b><br><small>🏕️ Aqua-Glamps, Tierpark</small>');
+    L.circleMarker([45.51, 10.73], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>Strandbad Lazise</b><br><small>🏖️ Kies/Sand, sehr flach</small>');
+    L.circleMarker([45.55, 10.72], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>Spiaggia Bardolino</b><br><small>🏖️ Breiter Strand, Promenade</small>');
+    L.circleMarker([45.49, 10.61], {
+      radius: 8, fillColor: '#1A5C7A', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>Sirmione Lido</b><br><small>🏖️ Thermalbad, Halbinsel</small>');
+    L.circleMarker([45.44, 10.71], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>Gardaland</b><br><small>🎢 Italiens größter Freizeitpark</small>');
+    L.circleMarker([45.43, 10.7], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>Canevaworld / Movieland</b><br><small>🌊 Wasserpark neben Gardaland</small>');
+    L.circleMarker([45.51, 10.73], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>Altstadt Lazise</b><br><small>🏘️ Venezianische Ortschaft</small>');
+    L.circleMarker([45.49, 10.61], {
+      radius: 8, fillColor: '#2D7A4F', color: '#fff',
+      weight: 2, opacity: 1, fillOpacity: 0.9
+    }).addTo(map_gardasee).bindPopup('<b>Grotte di Catullo Sirmione</b><br><small>🏛️ Römische Ruinen</small>');
+      })();
+      </script>
     </div>
+    <div style='margin-bottom:1.5rem;'><div class='section-label'>Fotogalerie</div><div class="gallery-grid"><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500&q=75&auto=format&fit=crop','Gardasee Panorama')">
+        <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500&q=75&auto=format&fit=crop" alt="Gardasee Panorama" loading="lazy"/>
+        <div class="gallery-cap">Gardasee Panorama</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?w=500&q=75&auto=format&fit=crop','Uferpromenade Bardolino')">
+        <img src="https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?w=500&q=75&auto=format&fit=crop" alt="Uferpromenade Bardolino" loading="lazy"/>
+        <div class="gallery-cap">Uferpromenade Bardolino</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=500&q=75&auto=format&fit=crop','Kristallklares Wasser')">
+        <img src="https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=500&q=75&auto=format&fit=crop" alt="Kristallklares Wasser" loading="lazy"/>
+        <div class="gallery-cap">Kristallklares Wasser</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=500&q=75&auto=format&fit=crop','Familienurlaub Gardasee')">
+        <img src="https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=500&q=75&auto=format&fit=crop" alt="Familienurlaub Gardasee" loading="lazy"/>
+        <div class="gallery-cap">Familienurlaub Gardasee</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=500&q=75&auto=format&fit=crop','Sirmione Burg')">
+        <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=500&q=75&auto=format&fit=crop" alt="Sirmione Burg" loading="lazy"/>
+        <div class="gallery-cap">Sirmione Burg</div>
+      </div><div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=75&auto=format&fit=crop','Wasserspaß Familie')">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=75&auto=format&fit=crop" alt="Wasserspaß Familie" loading="lazy"/>
+        <div class="gallery-cap">Wasserspaß Familie</div>
+      </div></div></div>
+    <div class="klima-wrap">
+      <div class="klima-title">🌡️ Klimadiagramm — Ø Temperatur &amp; Niederschlag (mm)</div>
+      <canvas id="klima_gardasee" style="width:100%;height:180px;display:block;"></canvas>
+      <div class="klima-legend" style="margin-top:0.75rem;">
+        <div class="klima-legend-item"><div class="klima-legend-dot" style="background:var(--sun);"></div>Temperatur (°C)</div>
+        <div class="klima-legend-item"><div class="klima-legend-dot" style="background:var(--ocean-light);"></div>Niederschlag (mm)</div>
+      </div>
+      <script>
+      (function(){
+        var canvas = document.getElementById('klima_gardasee');
+        if(!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+        var temps = [5, 7, 11, 15, 19, 23, 26, 27, 22, 16, 10, 6];
+        var rains = [35, 32, 45, 58, 72, 60, 55, 58, 65, 68, 55, 42];
+        var W = canvas.offsetWidth || 600;
+        canvas.width = W * window.devicePixelRatio;
+        canvas.height = 180 * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        var pad = {l:30,r:10,t:10,b:30};
+        var cw = W - pad.l - pad.r;
+        var ch = 180 - pad.t - pad.b;
+        var n = months.length;
+        var bw = cw / n;
+        var maxTemp = 40, maxRain = 80;
+        ctx.clearRect(0,0,W,180);
+        // grid lines
+        ctx.strokeStyle='rgba(0,0,0,0.07)'; ctx.lineWidth=1;
+        [0,25,50,75,100].forEach(function(p){
+          var y = pad.t + ch*(1-p/100);
+          ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+        });
+        // rain bars
+        rains.forEach(function(r,i){
+          var h = (r/maxRain)*ch*0.8;
+          var x = pad.l + i*bw + bw*0.1;
+          var bW = bw*0.35;
+          ctx.fillStyle='rgba(43,126,161,0.55)';
+          ctx.beginPath();
+          ctx.roundRect(x, pad.t+ch-h, bW, h, [3,3,0,0]);
+          ctx.fill();
+        });
+        // temp line
+        ctx.beginPath(); ctx.strokeStyle='#D4841A'; ctx.lineWidth=2.5;
+        temps.forEach(function(t,i){
+          var x = pad.l + i*bw + bw*0.5;
+          var y = pad.t + ch*(1-t/maxTemp);
+          i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        // temp dots
+        temps.forEach(function(t,i){
+          var x = pad.l + i*bw + bw*0.5;
+          var y = pad.t + ch*(1-t/maxTemp);
+          ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2);
+          ctx.fillStyle='#D4841A'; ctx.fill();
+          ctx.fillStyle='#333'; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+          ctx.fillText(t+'°', x, y-7);
+        });
+        // month labels
+        ctx.fillStyle='#999'; ctx.font='9px sans-serif'; ctx.textAlign='center';
+        months.forEach(function(m,i){
+          var x = pad.l + i*bw + bw*0.5;
+          ctx.fillText(m, x, pad.t+ch+18);
+        });
+        // y-axis left (temp)
+        ctx.fillStyle='#D4841A'; ctx.font='8px sans-serif'; ctx.textAlign='right';
+        [0,10,20,30,40].forEach(function(v){
+          var y = pad.t + ch*(1-v/maxTemp);
+          ctx.fillText(v+'°', pad.l-3, y+3);
+        });
+      })();
+      </script>
+    </div>
+    <div class="section-label" style="margin-top:2rem;">Wusstest du?</div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:1.25rem;">Interessante Fakten</h3>
+    <div class="facts-grid"><div class="fact-card"><div class="fact-icon">🌊</div><div class="fact-text"><strong>Größter See Italiens</strong>Der Gardasee ist mit 370 km² der größte See Italiens — und tief genug (346 m), dass er nie einfriert. Das Wasser bleibt bis Oktober warm.</div></div><div class="fact-card"><div class="fact-icon">🍋</div><div class="fact-text"><strong>Zitronen & Olivenöl</strong>Das sub-mediterrane Klima am Gardasee erlaubt den Anbau von Zitronen und Oliven — einzigartig für diese nördliche Breite. Die Olivenöle sind preisgekrönt.</div></div><div class="fact-card"><div class="fact-icon">🎢</div><div class="fact-text"><strong>Gardaland</strong>Gardaland ist der meistbesuchte Freizeitpark Italiens mit über 3 Mio. Besuchern/Jahr. Das Peppa Pig Land (seit 2021) ist speziell für 2–5-Jährige gebaut.</div></div><div class="fact-card"><div class="fact-icon">⛵</div><div class="fact-text"><strong>Fährnetz</strong>Das Gardasee-Fährnetz verbindet über 20 Orte — mit einem Tagesticket könnt ihr beliebig oft ein- und aussteigen. Für Kinder ein riesiges Abenteuer.</div></div><div class="fact-card"><div class="fact-icon">🏔️</div><div class="fact-text"><strong>Monte Baldo</strong>Die Seilbahn auf den 2.218 m hohen Monte Baldo bietet eines der spektakulärsten Panoramen Norditaliens — und Gleitschirmflieger springen täglich ab.</div></div><div class="fact-card"><div class="fact-icon">🏛️</div><div class="fact-text"><strong>Sirmione</strong>Die autofreie Halbinsel Sirmione mit ihrer Scaligero-Burg aus dem 13. Jh. und den römischen Ruinen (1. Jh. v. Chr.) ist einer der schönsten Orte Norditaliens.</div></div></div>
 
     <div class="content-grid">
 
@@ -1504,28 +2297,46 @@
     </div>
 
     <div class="route-box">
-      <div class="route-title">🚗 Routenvorschlag Dortmund → Gardasee (oft direkt machbar)</div>
+      <div class="route-title">🚗 Routenvorschlag Dortmund → Gardasee — mit Zwischenstopp (empfohlen)</div>
       <div class="route-steps">
-        <div class="route-step">
-          <div class="route-dot">1</div>
-          <div class="route-content">
-            <div class="route-place">Dortmund → A45 → A8 → Innsbruck (~5,5 Std.)</div>
-            <div class="route-info">Frühstart empfohlen (6:00 Uhr) · Mittagspause nahe München oder Rosenheim</div>
-          </div>
+        <div class="route-step"><div class="route-dot">1</div><div class="route-content"><div class="route-place">Dortmund → München → Innsbruck (~6 Std.)</div><div class="route-info">A45 → A8 → Rosenheim → Innsbruck · Mittagspause bei Rosenheim oder Innsbruck</div></div></div>
+        <div class="route-step"><div class="route-dot">2</div><div class="route-content"><div class="route-place">🛏️ Übernachtung: Innsbruck (~6 Std. Tag 1) — optional</div><div class="route-info">Kürzeste Route: auch direkt in 8–9 Std. machbar · mit Kleinkind Übernachtung empfohlen</div></div></div>
+        <div class="route-step"><div class="route-dot">3</div><div class="route-content"><div class="route-place">Tag 2: Innsbruck → Brenner → Gardasee (~2,5 Std.)</div><div class="route-info">Entspannte Fahrt über den Brenner, nachmittags Ankunft und Strand</div></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.25rem;">
+        <div>
+          <div style="font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ocean);margin-bottom:0.75rem;">🛏️ Zwischenstopp Hinfahrt</div>
+<div style="background:var(--sand);border-radius:10px;padding:1rem 1.25rem;border:1px solid var(--border);margin-bottom:0.75rem;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:500;font-size:0.88rem;">🏨 Alphotel Innsbruck</div>
+      <div style="font-size:0.75rem;color:var(--sun);margin:0.1rem 0;">★★★★</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Innrain 1, Innsbruck (A12-nah)</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-size:0.78rem;color:var(--green);font-weight:500;">~90–130 €/Nacht</div>
+    </div>
+  </div>
+  <div style="font-size:0.78rem;margin-top:0.5rem;padding:0.4rem 0.6rem;background:var(--ocean-pale);border-radius:6px;color:var(--ocean);">✓ Kinderspielecke, Familiensuiten, Frühstücksbuffet, Tirol-Panorama, Parkhaus nebenan</div>
+  <a href="https://www.alphotel.at/de/" target="_blank" style="font-size:0.75rem;color:var(--ocean);text-decoration:none;display:inline-block;margin-top:0.4rem;">→ Jetzt ansehen</a>
+</div>
         </div>
-        <div class="route-step">
-          <div class="route-dot">2</div>
-          <div class="route-content">
-            <div class="route-place">Brenner → Verona → Gardasee (~3 weitere Std.)</div>
-            <div class="route-info">Brennerautobahn (Maut!) → A22 Richtung Verona → A4 → Abfahrt Peschiera del Garda</div>
-          </div>
-        </div>
-        <div class="route-step">
-          <div class="route-dot">3</div>
-          <div class="route-content">
-            <div class="route-place">Ankunft: Lazise / Bardolino (~8–9 Std.)</div>
-            <div class="route-info">Kürzeste Gesamtstrecke aller Ziele — für Kleinkind am angenehmsten. Kein Zwischenstopp nötig!</div>
-          </div>
+        <div>
+          <div style="font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ocean);margin-bottom:0.75rem;">🛏️ Zwischenstopp Rückfahrt</div>
+<div style="background:var(--sand);border-radius:10px;padding:1rem 1.25rem;border:1px solid var(--border);margin-bottom:0.75rem;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:500;font-size:0.88rem;">🏨 Hotel Grünauerhof</div>
+      <div style="font-size:0.75rem;color:var(--sun);margin:0.1rem 0;">★★★</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);">Wals bei Salzburg (A1/A10-nah)</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-size:0.78rem;color:var(--green);font-weight:500;">~75–100 €/Nacht</div>
+    </div>
+  </div>
+  <div style="font-size:0.78rem;margin-top:0.5rem;padding:0.4rem 0.6rem;background:var(--ocean-pale);border-radius:6px;color:var(--ocean);">✓ Spielplatz vor der Terrasse, Hallenbad, Familienzimmer, Restaurant vor Ort</div>
+  <a href="https://www.gruenauerhof.at/" target="_blank" style="font-size:0.75rem;color:var(--ocean);text-decoration:none;display:inline-block;margin-top:0.4rem;">→ Jetzt ansehen</a>
+</div>
         </div>
       </div>
     </div>
@@ -1793,7 +2604,7 @@
     { flag:'🇮🇹', name:'Gardasee', km:870, maut:45, nights_mobile:[60,90], nights_mobile_lux:[95,130], nights_camping:[28,42], food_mult:0.95, best:false }
   ];
 
-  function calcBudget(){
+  window.calcBudget = function calcBudget(){
     var type = document.getElementById('b-type').value;
     var nights = parseInt(document.getElementById('b-nights').value);
     var daily = parseInt(document.getElementById('b-daily').value);
@@ -1844,7 +2655,11 @@
     });
     res.innerHTML = html;
   }
-  calcBudget();
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ window.calcBudget(); });
+  } else {
+    window.calcBudget();
+  }
 
   /* ---------- PACKLISTE ---------- */
   var categories = [
@@ -1919,7 +2734,11 @@
     renderPack();
   };
 
-  renderPack();
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', renderPack);
+  } else {
+    renderPack();
+  }
 
 })();
 </script>
@@ -1928,6 +2747,126 @@
   <p>Reiseplaner · Sommerurlaub 2026 · Ab Dortmund · Familie (2 Erw. + Kind 2 J.)</p>
   <p style="margin-top: 0.5rem; opacity: 0.6;">Alle Angaben ohne Gewähr. Buchungen direkt bei den Anbietern. Preise und Verfügbarkeiten bitte aktuell prüfen.</p>
 </footer>
+
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open')">×</button>
+  <img id="lightbox-img" src="" alt=""/>
+  <div class="lightbox-cap" id="lightbox-cap"></div>
+</div>
+
+<script>
+// Leaflet
+(function(){
+  var link = document.createElement('link');
+  link.rel='stylesheet'; link.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+  document.head.appendChild(link);
+  var s = document.createElement('script');
+  s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  s.onload = function(){
+    // re-run all inline map scripts
+    document.querySelectorAll('script').forEach(function(sc){
+      if(sc.textContent.includes('L.map')) {
+        try{ eval(sc.textContent); }catch(e){}
+      }
+    });
+    // re-run klima canvases
+    document.querySelectorAll('canvas').forEach(function(cv){
+      var next = cv.nextElementSibling;
+      if(next && next.tagName==='SCRIPT') try{ eval(next.textContent); }catch(e){}
+    });
+  };
+  document.head.appendChild(s);
+})();
+
+// SLIDESHOW
+(function(){
+  function initSlideshow(){
+    var hero = document.getElementById('hero-slideshow');
+    if(!hero) return;
+    var slides = hero.querySelectorAll('.slide');
+    var dots = hero.querySelectorAll('.slide-dot');
+    var labelEl = document.getElementById('slide-label');
+    var slideIdx = 0;
+    function goSlide(n){
+      slides[slideIdx].classList.remove('active');
+      dots[slideIdx] && dots[slideIdx].classList.remove('active');
+      slideIdx = (n + slides.length) % slides.length;
+      slides[slideIdx].classList.add('active');
+      dots[slideIdx] && dots[slideIdx].classList.add('active');
+      if(labelEl) labelEl.textContent = slides[slideIdx].getAttribute('data-label') || '';
+    }
+    setInterval(function(){ goSlide(slideIdx + 1); }, 5000);
+    window.goSlide = goSlide;
+  }
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initSlideshow);
+  } else {
+    initSlideshow();
+  }
+})();
+
+// LIGHTBOX
+window.openLightbox = function(src, cap){
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-cap').textContent = cap;
+  document.getElementById('lightbox').classList.add('open');
+};
+window.closeLightbox = function(e){
+  if(e.target === document.getElementById('lightbox') || e.target === document.getElementById('lightbox-img'))
+    document.getElementById('lightbox').classList.remove('open');
+};
+
+// DECISION
+var dqAnswers = {};
+window.selectDQ = function(btn){
+  var q = btn.getAttribute('data-q');
+  document.querySelectorAll('.dq-btn[data-q="'+q+'"]').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  dqAnswers[q] = btn.getAttribute('data-v');
+};
+
+window.calcDecision = function(){
+  var scores = { istrien:0, languedoc:0, maremma:0, gardasee:0 };
+  var a = dqAnswers;
+
+  if(a['1']==='wetter'){ scores.languedoc+=3; scores.maremma+=2; }
+  if(a['1']==='preis'){ scores.istrien+=3; scores.gardasee+=2; }
+  if(a['1']==='strand'){ scores.languedoc+=3; scores.maremma+=2; scores.istrien+=1; }
+  if(a['1']==='kultur'){ scores.maremma+=3; scores.istrien+=2; scores.gardasee+=1; }
+
+  if(a['2']==='kurz'){ scores.gardasee+=3; }
+  if(a['2']==='mittel'){ scores.istrien+=2; scores.languedoc+=2; }
+  if(a['2']==='lang'){ scores.maremma+=2; scores.languedoc+=1; scores.istrien+=1; }
+
+  if(a['3']==='meer'){ scores.languedoc+=2; scores.maremma+=2; scores.istrien+=2; scores.gardasee-=1; }
+  if(a['3']==='see'){ scores.gardasee+=2; }
+  if(a['3']==='egal'){ scores.gardasee+=1; }
+
+  if(a['4']==='sparsam'){ scores.istrien+=3; scores.gardasee+=1; }
+  if(a['4']==='mittel'){ scores.languedoc+=2; scores.gardasee+=2; }
+  if(a['4']==='komfort'){ scores.maremma+=2; scores.languedoc+=1; }
+
+  if(a['5']==='natur'){ scores.maremma+=3; scores.istrien+=1; }
+  if(a['5']==='parks'){ scores.gardasee+=3; scores.istrien+=1; }
+  if(a['5']==='strand'){ scores.languedoc+=3; scores.maremma+=1; }
+  if(a['5']==='mix'){ scores.istrien+=2; scores.languedoc+=2; scores.gardasee+=1; }
+
+  var best = Object.keys(scores).reduce(function(a,b){ return scores[a]>scores[b]?a:b; });
+  var results = {
+    istrien:{ flag:'🇭🇷', name:'Istrien, Kroatien', text:'Bestes Preis-Leistungs-Verhältnis, klare Adria, ausgezeichnete Campinginfrastruktur — und mit Dinopark & Aquacolors viele Ausflugsziele für Kinder. Günstiger als alle anderen Ziele.', link:'#istrien' },
+    languedoc:{ flag:'🇫🇷', name:'Languedoc-Roussillon', text:'Sonnigstes Reiseziel mit den besten Sandstränden für Kleinkinder, flachem Wasser und 5-Sterne-Campingresorts direkt am Meer. UNESCO-Highlights in Reichweite.', link:'#languedoc' },
+    maremma:{ flag:'🇮🇹', name:'Maremma, Toskana', text:'Pinienwald-Sandstrände, Naturpark mit wilden Pferden, kostenlose Thermalquellen und echtes Dolce-Vita-Flair — das kulturreichste und naturschönste aller Ziele.', link:'#maremma' },
+    gardasee:{ flag:'🇮🇹', name:'Gardasee', text:'Kürzeste Fahrt, Gardaland um die Ecke, hervorragende Campinginfrastruktur und angenehm warmes Wasser — das entspannteste Reiseziel mit den meisten Kinderaktivitäten.', link:'#gardasee' },
+  };
+  var r = results[best];
+  var el = document.getElementById('decision-result');
+  el.innerHTML = '<div class="result-flag">'+r.flag+'</div><div class="result-title">Unser Tipp: '+r.name+'</div><div class="result-text">'+r.text+'</div><a class="result-link" href="'+r.link+'">Zur Detailseite →</a>';
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+};
+</script>
 
 </body>
 </html>
