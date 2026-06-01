@@ -800,6 +800,102 @@
   </ul>
 </nav>
 
+<!-- COUNTDOWN BAR -->
+<div class="countdown-bar" id="countdown-bar">
+  <span class="countdown-label">Abreise in</span>
+  <div class="countdown-units">
+    <div class="countdown-unit"><span class="countdown-num" id="cd-days">--</span><span class="countdown-unit-label">Tage</span></div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-unit-label">Stunden</span></div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-mins">--</span><span class="countdown-unit-label">Minuten</span></div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-unit-label">Sekunden</span></div>
+  </div>
+  <span class="countdown-dest">bis 22. August 2026</span>
+</div>
+
+<!-- HERO SLIDESHOW -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1555990793-da11153b2473?w=1600&q=80&auto=format&fit=crop">
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80&auto=format&fit=crop">
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1600&q=80&auto=format&fit=crop">
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600&q=80&auto=format&fit=crop">
+<div class="hero" id="hero-slideshow">
+  <div class="hs-slide hs-active" data-label="🇭🇷 Istrien, Kroatien">
+    <img src="https://images.unsplash.com/photo-1555990793-da11153b2473?w=1600&q=80&auto=format&fit=crop" alt="Istrien Küste" loading="eager"/>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hs-slide" data-label="🇫🇷 Languedoc, Frankreich">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80&auto=format&fit=crop" alt="Sandstrand Südfrankreich" loading="lazy"/>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hs-slide" data-label="🇮🇹 Maremma, Toskana">
+    <img src="https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1600&q=80&auto=format&fit=crop" alt="Toskana Küste" loading="lazy"/>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hs-slide" data-label="🇮🇹 Gardasee, Italien">
+    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600&q=80&auto=format&fit=crop" alt="Gardasee" loading="lazy"/>
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div id="hs-label">🇭🇷 Istrien, Kroatien</div>
+  <div id="hs-dots">
+    <button class="hs-dot hs-dot-active" data-idx="0" aria-label="Bild 1"></button>
+    <button class="hs-dot" data-idx="1" aria-label="Bild 2"></button>
+    <button class="hs-dot" data-idx="2" aria-label="Bild 3"></button>
+    <button class="hs-dot" data-idx="3" aria-label="Bild 4"></button>
+  </div>
+  <div class="hero-text-wrap">
+    <div class="hero-glass">
+      <div style="color:rgba(255,255,255,0.65);font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.6rem;">Reiseplaner · Familie · 22.08 – 06.09.2026</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:700;line-height:1.1;margin:0 0 0.9rem;color:white;">Wo fahren<br>wir hin?</h1>
+      <p style="font-size:0.95rem;color:rgba(255,255,255,0.8);margin:0 0 1.4rem;line-height:1.6;">4 sorgfältig ausgewählte Reiseziele für euren Sommerurlaub — Strand, Sonne und familienfreundliche Unterkünfte.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;">
+        <span class="hero-pill">📍 Ab Dortmund</span>
+        <span class="hero-pill">🚗 max. 11–12 Std.</span>
+        <span class="hero-pill">👨‍👩‍👧 2 Erw. + Kind (2 J.)</span>
+        <span class="hero-pill">🏕️ Camping / Mobilheim</span>
+        <span class="hero-pill">💶 2.000–4.000 €</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-shape"></div>
+</div>
+
+
+
+<!-- COUNTDOWN SEKTION -->
+<section id="countdown">
+  <div class="section-label">Zeit bis zum Urlaub</div>
+  <h2 class="section-title">Countdown läuft</h2>
+  <div style="background:var(--white);border-radius:16px;border:1px solid var(--border);padding:2rem;text-align:center;">
+    <div style="display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--ocean);line-height:1;" id="cd-big-days">--</div>
+        <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Tage</div>
+      </div>
+      <div style="font-size:3rem;color:var(--border);padding-top:0.2rem;">:</div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--ocean);line-height:1;" id="cd-big-hours">--</div>
+        <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Stunden</div>
+      </div>
+      <div style="font-size:3rem;color:var(--border);padding-top:0.2rem;">:</div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--ocean);line-height:1;" id="cd-big-mins">--</div>
+        <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Minuten</div>
+      </div>
+      <div style="font-size:3rem;color:var(--border);padding-top:0.2rem;">:</div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--sun);line-height:1;" id="cd-big-secs">--</div>
+        <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Sekunden</div>
+      </div>
+    </div>
+    <p style="font-size:0.9rem;color:var(--text-muted);">bis zur geplanten Abreise am <strong>Samstag, 22. August 2026</strong></p>
+    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.4rem;">Rückkehr: Sonntag, 6. September 2026 · <span id="urlaubs-tage" style="color:var(--ocean);font-weight:500;">15 Urlaubstage</span></p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
 
 <!-- DECISION WIDGET -->
 <section id="entscheiden">
@@ -1148,102 +1244,6 @@ L.circleMarker([45.49,10.61],{radius:8,fillColor:'#2D7A4F',color:'#fff',weight:2
 </section>
 <div class="section-divider"></div>
 
-<!-- COUNTDOWN BAR -->
-<div class="countdown-bar" id="countdown-bar">
-  <span class="countdown-label">Abreise in</span>
-  <div class="countdown-units">
-    <div class="countdown-unit"><span class="countdown-num" id="cd-days">--</span><span class="countdown-unit-label">Tage</span></div>
-    <span class="countdown-sep">:</span>
-    <div class="countdown-unit"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-unit-label">Stunden</span></div>
-    <span class="countdown-sep">:</span>
-    <div class="countdown-unit"><span class="countdown-num" id="cd-mins">--</span><span class="countdown-unit-label">Minuten</span></div>
-    <span class="countdown-sep">:</span>
-    <div class="countdown-unit"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-unit-label">Sekunden</span></div>
-  </div>
-  <span class="countdown-dest">bis 22. August 2026</span>
-</div>
-
-<!-- HERO SLIDESHOW -->
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1555990793-da11153b2473?w=1600&q=80&auto=format&fit=crop">
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80&auto=format&fit=crop">
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1600&q=80&auto=format&fit=crop">
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600&q=80&auto=format&fit=crop">
-<div class="hero" id="hero-slideshow">
-  <div class="hs-slide hs-active" data-label="🇭🇷 Istrien, Kroatien">
-    <img src="https://images.unsplash.com/photo-1555990793-da11153b2473?w=1600&q=80&auto=format&fit=crop" alt="Istrien Küste" loading="eager"/>
-    <div class="hero-overlay"></div>
-  </div>
-  <div class="hs-slide" data-label="🇫🇷 Languedoc, Frankreich">
-    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80&auto=format&fit=crop" alt="Sandstrand Südfrankreich" loading="lazy"/>
-    <div class="hero-overlay"></div>
-  </div>
-  <div class="hs-slide" data-label="🇮🇹 Maremma, Toskana">
-    <img src="https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1600&q=80&auto=format&fit=crop" alt="Toskana Küste" loading="lazy"/>
-    <div class="hero-overlay"></div>
-  </div>
-  <div class="hs-slide" data-label="🇮🇹 Gardasee, Italien">
-    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=1600&q=80&auto=format&fit=crop" alt="Gardasee" loading="lazy"/>
-    <div class="hero-overlay"></div>
-  </div>
-
-  <div id="hs-label">🇭🇷 Istrien, Kroatien</div>
-  <div id="hs-dots">
-    <button class="hs-dot hs-dot-active" data-idx="0" aria-label="Bild 1"></button>
-    <button class="hs-dot" data-idx="1" aria-label="Bild 2"></button>
-    <button class="hs-dot" data-idx="2" aria-label="Bild 3"></button>
-    <button class="hs-dot" data-idx="3" aria-label="Bild 4"></button>
-  </div>
-  <div class="hero-text-wrap">
-    <div class="hero-glass">
-      <div style="color:rgba(255,255,255,0.65);font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.6rem;">Reiseplaner · Familie · 22.08 – 06.09.2026</div>
-      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:700;line-height:1.1;margin:0 0 0.9rem;color:white;">Wo fahren<br>wir hin?</h1>
-      <p style="font-size:0.95rem;color:rgba(255,255,255,0.8);margin:0 0 1.4rem;line-height:1.6;">4 sorgfältig ausgewählte Reiseziele für euren Sommerurlaub — Strand, Sonne und familienfreundliche Unterkünfte.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;">
-        <span class="hero-pill">📍 Ab Dortmund</span>
-        <span class="hero-pill">🚗 max. 11–12 Std.</span>
-        <span class="hero-pill">👨‍👩‍👧 2 Erw. + Kind (2 J.)</span>
-        <span class="hero-pill">🏕️ Camping / Mobilheim</span>
-        <span class="hero-pill">💶 2.000–4.000 €</span>
-      </div>
-    </div>
-  </div>
-  <div class="hero-shape"></div>
-</div>
-
-
-
-<!-- COUNTDOWN SEKTION -->
-<section id="countdown">
-  <div class="section-label">Zeit bis zum Urlaub</div>
-  <h2 class="section-title">Countdown läuft</h2>
-  <div style="background:var(--white);border-radius:16px;border:1px solid var(--border);padding:2rem;text-align:center;">
-    <div style="display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem;">
-      <div>
-        <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--ocean);line-height:1;" id="cd-big-days">--</div>
-        <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Tage</div>
-      </div>
-      <div style="font-size:3rem;color:var(--border);padding-top:0.2rem;">:</div>
-      <div>
-        <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--ocean);line-height:1;" id="cd-big-hours">--</div>
-        <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Stunden</div>
-      </div>
-      <div style="font-size:3rem;color:var(--border);padding-top:0.2rem;">:</div>
-      <div>
-        <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--ocean);line-height:1;" id="cd-big-mins">--</div>
-        <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Minuten</div>
-      </div>
-      <div style="font-size:3rem;color:var(--border);padding-top:0.2rem;">:</div>
-      <div>
-        <div style="font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--sun);line-height:1;" id="cd-big-secs">--</div>
-        <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);">Sekunden</div>
-      </div>
-    </div>
-    <p style="font-size:0.9rem;color:var(--text-muted);">bis zur geplanten Abreise am <strong>Samstag, 22. August 2026</strong></p>
-    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.4rem;">Rückkehr: Sonntag, 6. September 2026 · <span id="urlaubs-tage" style="color:var(--ocean);font-weight:500;">15 Urlaubstage</span></p>
-  </div>
-</section>
-
-<div class="section-divider"></div>
 
 <!-- BUDGETRECHNER -->
 <section id="budget">
