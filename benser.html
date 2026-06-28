@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bensersiel – 5 Tage Nordsee</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand: #f5f0e8;
+    --sand-dark: #e8dfc8;
+    --sea: #1a5c7a;
+    --sea-light: #2d7fa8;
+    --sea-pale: #e8f3f8;
+    --wave: #4aa3c8;
+    --foam: #ffffff;
+    --dune: #b8955a;
+    --dune-pale: #f7f0e0;
+    --text: #1c2b35;
+    --text-mid: #4a5f6b;
+    --text-muted: #7a8f9b;
+    --border: rgba(26,92,122,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--sand);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .hero {
+    background: var(--sea);
+    color: var(--foam);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0; right: 0;
+    height: 48px;
+    background: var(--sand);
+    clip-path: ellipse(56% 100% at 50% 100%);
+  }
+
+  .hero-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wave);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--foam);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+  }
+
+  .hero-chips {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 0.3rem 0.9rem;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* NAV */
+  nav {
+    background: var(--foam);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 1rem 1.1rem;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  nav a:hover { color: var(--sea); border-bottom-color: var(--wave); }
+
+  /* MAIN */
+  main { max-width: 820px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+  /* DAY SECTION */
+  .day {
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 64px;
+  }
+
+  .day-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .day-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 400;
+    color: var(--sand-dark);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .day-title-group h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--sea);
+    line-height: 1.2;
+  }
+
+  .day-title-group p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* TIMELINE */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 0 1rem;
+    position: relative;
+  }
+
+  .tl-item:not(:last-child) .tl-line {
+    position: absolute;
+    left: 20px;
+    top: 36px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .tl-time {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding-top: 0.55rem;
+    text-align: right;
+    letter-spacing: 0.04em;
+  }
+
+  .tl-dot-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 16px;
+    top: 0.5rem;
+  }
+
+  .tl-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--wave);
+    border: 2px solid var(--foam);
+    box-shadow: 0 0 0 1px var(--wave);
+    flex-shrink: 0;
+  }
+
+  .tl-body {
+    background: var(--foam);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 12px;
+  }
+
+  .tl-body h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sea);
+    margin-bottom: 3px;
+  }
+
+  .tl-body p {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+
+  .tl-body .tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .tag-eat { background: #fef3e2; color: #9a5c0a; }
+  .tag-see { background: #e4f0f8; color: #1a5c7a; }
+  .tag-walk { background: #e9f5ea; color: #2e7d32; }
+  .tag-boat { background: #ede7f6; color: #5e35b1; }
+  .tag-spa { background: #fce4ec; color: #b71c60; }
+  .tag-tip { background: #f1f8e9; color: #558b2f; }
+
+  /* TIPS BOX */
+  .tip-box {
+    background: var(--dune-pale);
+    border: 1px solid rgba(184,149,90,0.25);
+    border-left: 3px solid var(--dune);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 2rem 0;
+    font-size: 13px;
+    color: var(--text-mid);
+  }
+
+  .tip-box strong {
+    display: block;
+    color: var(--dune);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  /* RESTAURANT GRID */
+  .restaurant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 2rem;
+  }
+
+  .rest-card {
+    background: var(--foam);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+
+  .rest-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--sea);
+    margin-bottom: 2px;
+  }
+
+  .rest-type {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .rest-desc {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  .stars {
+    font-size: 11px;
+    color: var(--dune);
+    margin-top: 5px;
+  }
+
+  /* SECTION DIVIDER */
+  .divider {
+    text-align: center;
+    margin: 2rem 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--sand-dark);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* HIGHLIGHTS SUMMARY */
+  .highlights {
+    background: var(--sea-pale);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .highlights h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--sea);
+    margin-bottom: 1rem;
+  }
+
+  .hl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+  }
+
+  .hl-item {
+    background: var(--foam);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--sea);
+    border: 1px solid rgba(26,92,122,0.1);
+  }
+
+  .hl-item span {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    background: var(--foam);
+  }
+
+  @media (max-width: 560px) {
+    .hero { padding: 3rem 1.25rem 2.5rem; }
+    main { padding: 2rem 1rem 4rem; }
+    .tl-item { grid-template-columns: 52px 1fr; }
+    .day-num { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="hero-label">Reiseplan August</p>
+  <h1>Bensersiel<br>an der Nordsee</h1>
+  <p class="hero-sub">5 Tage Strand, frischer Fisch und Ostfriesland – für zwei Personen</p>
+  <div class="hero-chips">
+    <span class="chip">Hotel Aquantis Upstalsboom</span>
+    <span class="chip">5 Tage · 4 Nächte</span>
+    <span class="chip">Anreise mit dem Auto</span>
+    <span class="chip">August</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#tag1">Tag 1</a>
+  <a href="#tag2">Tag 2</a>
+  <a href="#tag3">Tag 3</a>
+  <a href="#tag4">Tag 4</a>
+  <a href="#tag5">Tag 5</a>
+  <a href="#essen">Restaurants</a>
+  <a href="#tipps">Tipps</a>
+</nav>
+
+<main>
+
+<!-- TAG 1 -->
+<section class="day" id="tag1">
+  <div class="day-header">
+    <div class="day-num">01</div>
+    <div class="day-title-group">
+      <h2>Ankunft &amp; erstes Ankommen</h2>
+      <p>Strand · Hafen · Abendessen am Wasser</p>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">Mittag</div>
+      <div class="tl-body">
+        <h3>Anreise &amp; Check-in Aquantis</h3>
+        <p>Anreise aus Richtung NRW über die A31, ca. 3,5–4 Std. Check-in ab 15 Uhr. Das Hotel liegt direkt am Deich – Koffer abladen und direkt raus auf den Deich.</p>
+        <div class="tags"><span class="tag tag-tip">Tipp</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">Nachmittag</div>
+      <div class="tl-body">
+        <h3>Erster Gang zum Strand</h3>
+        <p>Der Strand Bensersiel liegt fußläufig vom Hotel. Im August voll, aber mit Blick auf Langeoog – die Insel liegt quasi vor der Haustür. Einfach ankommen, Salzluft einatmen, barfuß laufen.</p>
+        <div class="tags"><span class="tag tag-walk">Strand</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">17 Uhr</div>
+      <div class="tl-body">
+        <h3>Hafenspaziergang &amp; Strandportal</h3>
+        <p>Kurzer Spaziergang zum Hafen. Vom Strandportal aus hat man einen schönen Panoramablick auf Hafen, Meer und die anlaufenden Fähren nach Langeoog. Ideal zum Ankommen.</p>
+        <div class="tags"><span class="tag tag-see">Aussicht</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">19 Uhr</div>
+      <div class="tl-body">
+        <h3>Abendessen: Fischerstuben Schwindtke</h3>
+        <p>Einer der besten Fischtische direkt am Ort. Frischer Ostfriesland-Fisch, traditionell und verlässlich gut. Tischreservierung für August dringend empfohlen. Mittwochs geschlossen.</p>
+        <div class="tags"><span class="tag tag-eat">Abendessen</span><span class="tag tag-tip">Reservierung</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAG 2 -->
+<section class="day" id="tag2">
+  <div class="day-header">
+    <div class="day-num">02</div>
+    <div class="day-title-group">
+      <h2>Tagesausflug nach Langeoog</h2>
+      <p>Fährfahrt · Insel · Naturstrand</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>Wichtiger Hinweis</strong>
+    Im August ist die Fähre nach Langeoog stark gefragt. Tickets vorab online buchen (langeoog.de) und früh am Hafen sein – der Fähranleger liegt 50 m vom Hotel. Gepäck bleibt im Hotel; auf Langeoog sind keine Autos erlaubt.
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">08:30</div>
+      <div class="tl-body">
+        <h3>Frühstück im Hotel &amp; Aufbruch zum Hafen</h3>
+        <p>Frühes Frühstück – die Überfahrt dauert ca. 45 Minuten. Am Hafen kurz die Atmosphäre genießen, bevor das Schiff ablegt.</p>
+        <div class="tags"><span class="tag tag-boat">Fähre</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">09:30</div>
+      <div class="tl-body">
+        <h3>Langeoog: Inselrunde</h3>
+        <p>Die Inselbahn bringt euch vom Hafen ins Dorf. Kein Auto, kein Trubel. Langeoog ist ruhig, mit Dünen und einem langen Naturstrand. Fahrräder leihen für die Inselrunde – bis zum Nationalpark-Strand im Osten.</p>
+        <div class="tags"><span class="tag tag-see">Insel</span><span class="tag tag-walk">Dünen</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">12:30</div>
+      <div class="tl-body">
+        <h3>Mittagessen auf Langeoog</h3>
+        <p>Im Dorfkern gibt es mehrere Fischrestaurants und Cafés. Fischbrötchen am Strand sind der Klassiker und für August absolut passend.</p>
+        <div class="tags"><span class="tag tag-eat">Mittagessen</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">14–16 Uhr</div>
+      <div class="tl-body">
+        <h3>Nachmittag am Inselstrand</h3>
+        <p>Der Nordstrand von Langeoog gilt als einer der schönsten Naturstrände der Ostfriesischen Inseln – breiter, weißer Sand, weniger überlaufen als Sylt oder Norderney. Ausgiebig genießen.</p>
+        <div class="tags"><span class="tag tag-walk">Strand</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">17 Uhr</div>
+      <div class="tl-body">
+        <h3>Rückfähre &amp; entspannter Abend</h3>
+        <p>Abends ist wenig nötig. Das Aquantis hat einen Wellnessbereich – Insel-Erschöpfung auskurieren. Leichtes Abendessen im Restaurant Stürhus (1,5 Gehminuten).</p>
+        <div class="tags"><span class="tag tag-boat">Rückfahrt</span><span class="tag tag-spa">Wellness</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAG 3 -->
+<section class="day" id="tag3">
+  <div class="day-header">
+    <div class="day-num">03</div>
+    <div class="day-title-group">
+      <h2>Neuharlingersiel &amp; Wattenmeer</h2>
+      <p>Malerdorf · Hafenidyll · Wattwanderung</p>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">09:30</div>
+      <div class="tl-body">
+        <h3>Fahrt nach Neuharlingersiel (20 Min.)</h3>
+        <p>Das kleine Fischerdorf gilt als eines der malerischsten an der Küste. Historischer Hafen mit echten Fischkuttern, bunten Häusern und Blick auf Spiekeroog. Frühmorgens ist der Hafen noch ruhig.</p>
+        <div class="tags"><span class="tag tag-see">Malerdorf</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">10:30</div>
+      <div class="tl-body">
+        <h3>Kaffee im Café Inselblick</h3>
+        <p>Direkt am Hafen, mit Blick auf Spiekeroog und die Kutterflotte. Perfekt für einen Morgenkaffee und Kuchen. Eine der am besten bewerteten Adressen der ganzen Region.</p>
+        <div class="tags"><span class="tag tag-eat">Kaffee &amp; Kuchen</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">11:30</div>
+      <div class="tl-body">
+        <h3>Wattwanderung ab Bensersiel</h3>
+        <p>Das Nationalpark-Haus Wattenhuus in Bensersiel bietet geführte Wattwanderungen an – je nach Tide variiert die Zeit. Gummistiefel leihen (oder alte Schuhe), 2 Std. geführt durch den Nationalpark. Erlebnis, das viele unterschätzen.</p>
+        <div class="tags"><span class="tag tag-walk">Watt</span><span class="tag tag-see">Nationalpark</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">14 Uhr</div>
+      <div class="tl-body">
+        <h3>Mittagessen: Gasthaus Friesenkate, Neuharlingersiel</h3>
+        <p>Traditionelle ostfriesische Küche in einem echten Dorfgasthaus. Frischer Fisch, regional, bodenständig. Mittwochs geschlossen – auf Öffnungszeiten achten.</p>
+        <div class="tags"><span class="tag tag-eat">Mittagessen</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">Abend</div>
+      <div class="tl-body">
+        <h3>Abendessen: Dattein am Hafen</h3>
+        <p>Eine Mischung aus Bar und Restaurant – urgemütlich, direkt am Hafenbecken in Neuharlingersiel. Gute Küche, tolles Ambiente bis spät. Weit über die Region hinaus bekannt.</p>
+        <div class="tags"><span class="tag tag-eat">Abendessen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAG 4 -->
+<section class="day" id="tag4">
+  <div class="day-header">
+    <div class="day-num">04</div>
+    <div class="day-title-group">
+      <h2>Esens &amp; Carolinensiel</h2>
+      <p>Altstadt · Historischer Hafen · Abendessen im Besonderen</p>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">Morgen</div>
+      <div class="tl-body">
+        <h3>Strand &amp; Nordseetherme</h3>
+        <p>Freier Vormittag. Entweder noch einmal ausgiebig am Strand in Bensersiel – oder die Nordseetherme nutzen, die zum Hotel gehört. Für August: Strandbesuch eher morgens, wenn noch Platz ist.</p>
+        <div class="tags"><span class="tag tag-walk">Strand</span><span class="tag tag-spa">Therme</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">11 Uhr</div>
+      <div class="tl-body">
+        <h3>Esens Altstadt (15 Min. Fahrt)</h3>
+        <p>Die Kreisstadt Esens hat eine charmante Altstadt mit historischer Ratskirche, altem Rathaus und einer Windmühle. Klein und schnell erkundet – gut zum Schlendern, mit einigen schönen Cafés. Der Von-Thünen-Kurpark liegt direkt an der Hauptstraße.</p>
+        <div class="tags"><span class="tag tag-see">Altstadt</span><span class="tag tag-walk">Schlendern</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">13 Uhr</div>
+      <div class="tl-body">
+        <h3>Fahrt nach Carolinensiel (30 Min.)</h3>
+        <p>Carolinensiel ist ein ostfriesisches Kleinod mit einem historischen Museumshafen – alte Tjalk-Segelschiffe, Backsteinhäuser und totale Stille. Perfekter Kontrastpunkt zum Küstentrubel.</p>
+        <div class="tags"><span class="tag tag-see">Museumshafen</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">14 Uhr</div>
+      <div class="tl-body">
+        <h3>Harlesiel Mole</h3>
+        <p>Vom Carolinensiel aus kurze Fahrt zur Harlesiel Mole – dem Hafen, von dem die Fähren nach Wangerooge ablegen. Schöner Aussichtspunkt, Spaziermöglichkeiten, rustikale Imbisse mit Blick auf die Küste.</p>
+        <div class="tags"><span class="tag tag-see">Aussicht</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">19 Uhr</div>
+      <div class="tl-body">
+        <h3>Abendessen: Buddy's Restaurant, Altharlingersiel</h3>
+        <p>Ein echter Geheimtipp – eine umgebaute Scheune mit außergewöhnlichem Ambiente, kreativer Küche und einer Speisekarte, die auf einem fahrbaren Podest zum Tisch gebracht wird. Gut bürgerlich trifft auf Stil. Reservierung unbedingt nötig.</p>
+        <div class="tags"><span class="tag tag-eat">Abendessen</span><span class="tag tag-tip">Geheimtipp</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAG 5 -->
+<section class="day" id="tag5">
+  <div class="day-header">
+    <div class="day-num">05</div>
+    <div class="day-title-group">
+      <h2>Letzter Morgen &amp; Abreise</h2>
+      <p>Abschiedsstrand · Fischbrötchen · Heimreise</p>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">Morgen</div>
+      <div class="tl-body">
+        <h3>Letzter Spaziergang am Naturstrand</h3>
+        <p>Der Naturstrand Bensersiel liegt rechts vom Hafen, hinter dem Fährterminal – ruhiger, hundefreundlich, weniger bebaut. Der schönere der beiden Strände für einen ruhigen Abschiedsmorgen.</p>
+        <div class="tags"><span class="tag tag-walk">Naturstrand</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-time">09:30</div>
+      <div class="tl-body">
+        <h3>Frühstück &amp; Check-out</h3>
+        <p>Letztes Frühstück im Hotel. Check-out bis 11 Uhr. Koffer ins Auto, aber kein Stress – der Rest des Morgens gehört dem Ort.</p>
+        <div class="tags"><span class="tag tag-tip">Check-out</span></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">11 Uhr</div>
+      <div class="tl-body">
+        <h3>Fischbrötchen: Bensersiel Fisch und Meer</h3>
+        <p>Das beste Fischbrötchen am Platz, direkt an der Hauptstraße. Rotbarsch, Matjes, Krabben – jeden Tag frisch. Bester Abschluss eines Nordseeurlaubs. Dann Fahrtrichtung Heimat.</p>
+        <div class="tags"><span class="tag tag-eat">Mittagsimbiss</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">Restaurants im Überblick</div>
+
+<!-- RESTAURANT SECTION -->
+<section id="essen" style="scroll-margin-top: 64px;">
+  <div class="restaurant-grid">
+    <div class="rest-card">
+      <div class="rest-name">Fischerstuben Schwindtke</div>
+      <div class="rest-type">Fisch · Abendessen</div>
+      <div class="rest-desc">Klassische Fischküche direkt in Bensersiel. Verlässlich frisch, ostfriesische Atmosphäre. Mittwochs Ruhetag.</div>
+      <div class="stars">★★★★½ · Tischreservierung nötig</div>
+    </div>
+    <div class="rest-card">
+      <div class="rest-name">Restaurant Stürhus</div>
+      <div class="rest-type">Fisch · Gastropub</div>
+      <div class="rest-desc">Gemütlich, direkt in Bensersiel, guter Fisch und freundliches Personal. Mittwochs geschlossen.</div>
+      <div class="stars">★★★★½ · Fußnähe zum Hotel</div>
+    </div>
+    <div class="rest-card">
+      <div class="rest-name">Bensersiel Fisch und Meer</div>
+      <div class="rest-type">Fischbrötchen · Imbiss</div>
+      <div class="rest-desc">Der beste Fischimbiss direkt am Ort. Rotbarsch, Krabben, faire Preise. Täglich geöffnet.</div>
+      <div class="stars">★★★★½ · 2.000+ Bewertungen</div>
+    </div>
+    <div class="rest-card">
+      <div class="rest-name">Café Inselblick</div>
+      <div class="rest-type">Café · Hafen Neuharlingersiel</div>
+      <div class="rest-desc">Direkt am Hafenbecken mit Blick auf Spiekeroog. Kuchen, Kaffee, unschlagbare Lage.</div>
+      <div class="stars">★★★★½ · Morgens ruhiger</div>
+    </div>
+    <div class="rest-card">
+      <div class="rest-name">Dattein</div>
+      <div class="rest-type">Bar & Restaurant · Neuharlingersiel</div>
+      <div class="rest-desc">Urgemütlich, direkt am Hafen. Gute Küche, tolles Ambiente bis spät in die Nacht.</div>
+      <div class="stars">★★★★★ · 3.000+ Bewertungen</div>
+    </div>
+    <div class="rest-card">
+      <div class="rest-name">Gasthaus Friesenkate</div>
+      <div class="rest-type">Traditionell · Neuharlingersiel</div>
+      <div class="rest-desc">Klassische ostfriesische Küche. Jetzt mit Lieferroboter – ein Erlebnis für sich. Mittwoch Ruhetag.</div>
+      <div class="stars">★★★★ · Unerwartetes Highlight</div>
+    </div>
+    <div class="rest-card">
+      <div class="rest-name">Buddy's Restaurant</div>
+      <div class="rest-type">Gehobenes Abendessen · Altharlingersiel</div>
+      <div class="rest-desc">Umgebaute Scheune, außergewöhnliches Ambiente, hervorragende Küche. Reservierung unbedingt.</div>
+      <div class="stars">★★★★½ · Der besondere Abend</div>
+    </div>
+    <div class="rest-card">
+      <div class="rest-name">Restaurant Hafenblick</div>
+      <div class="rest-type">Pizza · Fisch · Familien</div>
+      <div class="rest-desc">Modernes Restaurant direkt am Strand. Hervorragende Pizza und Fisch. Täglich 12–21 Uhr.</div>
+      <div class="stars">★★★★½ · Täglich geöffnet</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPPS -->
+<div class="divider" style="margin-top: 3rem;">Praktische Tipps</div>
+
+<section id="tipps" style="scroll-margin-top: 64px;">
+  <div class="tip-box" style="margin-top: 1rem;">
+    <strong>August-Hochsaison</strong>
+    Bensersiel ist im August voll. Restaurants unbedingt vorab reservieren, besonders Fischerstuben, Stürhus und Buddy's. Die Fähre nach Langeoog wird online gebucht – ohne Ticket gibt es im August keinen Platz.
+  </div>
+  <div class="tip-box">
+    <strong>Parken</strong>
+    Das Aquantis hat eigene Stellplätze. Für Tagesausflüge in Neuharlingersiel und Carolinensiel: gebührenpflichtige Parkplätze, aber ausreichend vorhanden. Frühes Kommen hilft.
+  </div>
+  <div class="tip-box">
+    <strong>Wetter & Kleidung</strong>
+    Nordsee im August: 18–22°C, Wind ist immer möglich. Auch in der Hitze eine leichte Jacke mitbringen. Für die Wattwanderung: alte Schuhe oder Gummistiefel (vor Ort leihbar).
+  </div>
+  <div class="tip-box">
+    <strong>Wattenhuus Bensersiel</strong>
+    Das Nationalpark-Haus direkt am Ort bietet geführte Wattwanderungen – Zeiten sind tidenabhängig. Samstags geschlossen, sonntags ab 13 Uhr. Vorab anrufen oder website prüfen.
+  </div>
+
+  <div class="highlights" style="margin-top: 2rem;">
+    <h2>Die fünf Highlights auf einen Blick</h2>
+    <div class="hl-grid">
+      <div class="hl-item"><span>Tag 2</span>Tagesausflug Langeoog</div>
+      <div class="hl-item"><span>Tag 3</span>Wattwanderung Nationalpark</div>
+      <div class="hl-item"><span>Tag 3</span>Hafen Neuharlingersiel</div>
+      <div class="hl-item"><span>Tag 4</span>Carolinensiel Museumshafen</div>
+      <div class="hl-item"><span>Tag 4</span>Abend in Buddy's Restaurant</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Reiseplan Bensersiel · August · Hotel Aquantis Upstalsboom · Erstellt mit Claude
+</footer>
+
+</body>
+</html>

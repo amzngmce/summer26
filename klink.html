@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ausflug zum Schlosshotel Klink</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-deep:   #1a2e3b;
+    --blue-mid:    #5b9eaf;
+    --blue-light:  #8fa8b2;
+    --sand:        #f2ece3;
+    --sand-dark:   #e6ddd1;
+    --white:       #ffffff;
+    --text-main:   #1a2e3b;
+    --text-muted:  #607080;
+    --radius:      10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--sand);
+    color: var(--text-main);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ─────────────────────────────────────────────────── */
+  .hero {
+    background: var(--blue-deep);
+    color: var(--white);
+    padding: 80px 24px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 110%, #5b9eaf22 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--blue-mid);
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--blue-light);
+    font-weight: 300;
+    max-width: 460px;
+    margin: 0 auto 40px;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .hero-meta-item .label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue-light);
+  }
+  .hero-meta-item .value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  /* ── MAIN WRAPPER ──────────────────────────────────────────── */
+  .wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* ── SECTION TITLES ────────────────────────────────────────── */
+  .section-header {
+    padding: 52px 0 28px;
+    border-bottom: 1.5px solid var(--sand-dark);
+    margin-bottom: 32px;
+  }
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 8px;
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--blue-deep);
+  }
+
+  /* ── DAY TABS ──────────────────────────────────────────────── */
+  .day-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 0 0 4px;
+    margin-bottom: 32px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .day-tabs::-webkit-scrollbar { display: none; }
+
+  .day-tab {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    border: 1.5px solid var(--sand-dark);
+    border-radius: 40px;
+    background: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .day-tab:hover {
+    border-color: var(--blue-mid);
+    color: var(--blue-deep);
+  }
+  .day-tab.active {
+    background: var(--blue-deep);
+    border-color: var(--blue-deep);
+    color: var(--white);
+  }
+
+  /* ── DAY PANELS ────────────────────────────────────────────── */
+  .day-panel { display: none; }
+  .day-panel.active { display: block; }
+
+  .day-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--blue-deep);
+    margin-bottom: 6px;
+  }
+  .day-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  /* ── TIMELINE ──────────────────────────────────────────────── */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 1.5px;
+    background: linear-gradient(to bottom, var(--blue-mid), var(--sand-dark));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--blue-mid);
+    border: 2px solid var(--sand);
+  }
+
+  .timeline-time {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 4px;
+  }
+  .timeline-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    border: 1px solid var(--sand-dark);
+  }
+  .timeline-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--blue-deep);
+    margin-bottom: 6px;
+  }
+  .timeline-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .timeline-card .tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .tag-food   { background: #fff3e0; color: #b06000; }
+  .tag-nature { background: #e8f4f0; color: #2a6b57; }
+  .tag-kultur { background: #eef0fa; color: #3b4ba8; }
+  .tag-hotel  { background: #f0eef8; color: #5b3d8a; }
+  .tag-ausflug{ background: #fdedf0; color: #8a2a3d; }
+
+  /* ── INFO CARDS GRID ───────────────────────────────────────── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .info-card {
+    background: var(--white);
+    border: 1px solid var(--sand-dark);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .info-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+  .info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--blue-deep);
+    margin-bottom: 6px;
+  }
+  .info-card p, .info-card li {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .info-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .info-card ul li::before {
+    content: '→ ';
+    color: var(--blue-mid);
+    font-size: 0.8rem;
+  }
+
+  /* ── RESTAURANT LIST ───────────────────────────────────────── */
+  .restaurant-list { display: flex; flex-direction: column; gap: 14px; }
+  .restaurant-card {
+    background: var(--white);
+    border: 1px solid var(--sand-dark);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .restaurant-badge {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: var(--blue-deep);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  .restaurant-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--blue-deep);
+    margin-bottom: 3px;
+  }
+  .restaurant-info .rest-meta {
+    font-size: 0.78rem;
+    color: var(--blue-mid);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .restaurant-info p {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .price-dots {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    color: var(--blue-mid);
+    font-weight: 600;
+    padding-top: 2px;
+  }
+
+  /* ── TIPPS BOX ─────────────────────────────────────────────── */
+  .tips-box {
+    background: var(--blue-deep);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 30px;
+    margin-top: 40px;
+  }
+  .tips-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .tip-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .tip-icon { font-size: 1rem; flex-shrink: 0; padding-top: 2px; }
+  .tip-text { font-size: 0.83rem; color: var(--blue-light); line-height: 1.55; }
+
+  /* ── FOOTER ────────────────────────────────────────────────── */
+  footer {
+    background: var(--blue-deep);
+    color: var(--blue-light);
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── RESPONSIVE ────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .hero { padding: 60px 20px 48px; }
+    .hero-meta { gap: 20px; }
+    .wrapper { padding: 0 16px 60px; }
+    .restaurant-card { flex-wrap: wrap; }
+    .price-dots { margin-left: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-eyebrow">Reiseplan · Mecklenburgische Seenplatte</p>
+  <h1>Ausflug zum<br><em>Schlosshotel Klink</em></h1>
+  <p class="hero-sub">Fünf Tage an der Müritz – Natur, Geschichte und gutes Essen.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="label">Reiseziel</span>
+      <span class="value">Klink / Waren (Müritz)</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Reisezeit</span>
+      <span class="value">August 2025</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Dauer</span>
+      <span class="value">5 Tage</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Anreise</span>
+      <span class="value">Mit dem Auto</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- ── TAGESPLAN ──────────────────────────────────────────── -->
+  <div class="section-header">
+    <p class="section-eyebrow">Tag für Tag</p>
+    <h2>Der Reiseplan</h2>
+  </div>
+
+  <div class="day-tabs">
+    <button class="day-tab active" onclick="showDay(0)">Tag 1 – Ankunft</button>
+    <button class="day-tab" onclick="showDay(1)">Tag 2 – Waren</button>
+    <button class="day-tab" onclick="showDay(2)">Tag 3 – Nationalpark</button>
+    <button class="day-tab" onclick="showDay(3)">Tag 4 – Neustrelitz</button>
+    <button class="day-tab" onclick="showDay(4)">Tag 5 – Malchow & Abreise</button>
+  </div>
+
+  <!-- TAG 1 -->
+  <div class="day-panel active" id="day-0">
+    <h3 class="day-title">Tag 1 – Ankunft & erstes Kennenlernen</h3>
+    <p class="day-subtitle">Ankommen, durchatmen, die Müritz auf sich wirken lassen.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-time">Anreise</p>
+        <div class="timeline-card">
+          <h4>Einzug ins Schlosshotel Klink</h4>
+          <p>Check-in ab 15 Uhr. Zimmer mit Seeblick unbedingt vorab reservieren – der Blick auf die Müritz ist eines der Highlights des Hotels. Empfehlung: Schloss-Zimmer mit Balkon.</p>
+          <span class="tag tag-hotel">Hotel</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Spätnachmittag</p>
+        <div class="timeline-card">
+          <h4>Erster Spaziergang am Müritzufer</h4>
+          <p>Der kleine Naturstrand direkt am Schloss Klink lädt zum Ankommen ein. Einfach am Wasser entlanglaufen, den Seeblick genießen, die Luft schnuppern. Kein Programm.</p>
+          <span class="tag tag-nature">Natur</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Abend</p>
+        <div class="timeline-card">
+          <h4>Abendessen im Schlosshotel</h4>
+          <p>Das hoteleigene Restaurant setzt auf regionale Produkte – frischer Zander und Wild aus dem Umland. Für den ersten Abend ideal: ankommen, nicht mehr weit fahren, gut essen. Tisch vorab reservieren.</p>
+          <span class="tag tag-food">Restaurant</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAG 2 -->
+  <div class="day-panel" id="day-1">
+    <h3 class="day-title">Tag 2 – Waren (Müritz)</h3>
+    <p class="day-subtitle">Altstadt, Hafen, Müritzeum – die „Perle der Seenplatte" erkunden.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-time">Vormittag</p>
+        <div class="timeline-card">
+          <h4>Historische Altstadt & St.-Marien-Kirche</h4>
+          <p>Fachwerkhäuser, Kopfsteinpflaster, kleine Läden. Die St.-Marien-Kirche ist das Wahrzeichen Warens – wer die 176 Stufen schafft, wird mit einem Panoramablick über drei Seen belohnt (Aussichtsplattform auf 45 m). Ca. 5 km von Klink entfernt.</p>
+          <span class="tag tag-kultur">Kultur</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Mittag</p>
+        <div class="timeline-card">
+          <h4>Mittagessen am Hafen</h4>
+          <p>Am Nordhafen gibt es frischen Räucherfisch direkt vom Boot – Zander, Aal, Maräne. Günstig, authentisch, mit Seeblick. Alternative: Café/Bistro an der Strandstraße.</p>
+          <span class="tag tag-food">Restaurant</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Nachmittag</p>
+        <div class="timeline-card">
+          <h4>Müritzeum – Haus der 1.000 Seen</h4>
+          <p>Deutschlands größtes Süßwasseraquarium für heimische Fische auf 2.300 m². Auch wenn es touristisch klingt: das Tiefenbecken mit dem Maränenschwarm ist wirklich beeindruckend. Einplanen: ca. 1,5–2 Stunden.</p>
+          <span class="tag tag-kultur">Kultur</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Nachmittag</p>
+        <div class="timeline-card">
+          <h4>Schaugarten am Tiefwarensee</h4>
+          <p>Ein 16.000 m² großer botanischer Garten auf einer Landzunge. Mehrere Themengärten mit seltenen Pflanzen aus aller Welt – kaum ein Tourist weiß davon. Schöner Abstecher nach dem Museum.</p>
+          <span class="tag tag-nature">Natur</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Abend</p>
+        <div class="timeline-card">
+          <h4>Abendessen: Restaurant Ratskeller oder Moments</h4>
+          <p>Der Ratskeller (Alter Markt) liegt direkt am Hafen, urig und mit solider regionaler Küche. „Moments" (Neuer Markt 19) ist das aktuell am besten bewertete Restaurant in Waren – mediterran-europäisch, hochwertig. Reservierung erforderlich.</p>
+          <span class="tag tag-food">Restaurant</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAG 3 -->
+  <div class="day-panel" id="day-2">
+    <h3 class="day-title">Tag 3 – Müritz-Nationalpark</h3>
+    <p class="day-subtitle">Der größte Wald-Nationalpark Deutschlands – Seeadler, Kraniche, Stille.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-time">Früh</p>
+        <div class="timeline-card">
+          <h4>Morgenspaziergang im Nationalpark</h4>
+          <p>Früh aufbrechen lohnt sich: Zwischen 6 und 9 Uhr ist die Chance am größten, Seeadler bei der Jagd über dem Wasser zu beobachten. Einstieg über Federow oder Schwarzenhof (Nationalparkeingang), ca. 15 km von Klink.</p>
+          <span class="tag tag-nature">Natur</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Vormittag</p>
+        <div class="timeline-card">
+          <h4>Bootsfahrt auf der Müritz</h4>
+          <p>Die Weiße Flotte Müritz bietet Ausflugsfahrten ab Waren – zum Bolter Kanal und zurück, ca. 2 Stunden. Alternativ: Kanuverleih am Eingang Schwarzenhof für selbstständige Touren auf den Verbindungskanälen.</p>
+          <span class="tag tag-nature">Natur</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Mittag</p>
+        <div class="timeline-card">
+          <h4>Einkehr: Restaurant Nationalparkhotel Kranichrast</h4>
+          <p>Direkt am Nationalparkeingang Schwarzenhof. Regionale, erstklassige Küche – Müritzwild, Zander. Sehr gute Bewertungen, ruhige Lage. Ideal als Mittagspause nach der Bootsfahrt.</p>
+          <span class="tag tag-food">Restaurant</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Nachmittag</p>
+        <div class="timeline-card">
+          <h4>Heilwald Nesselberg</h4>
+          <p>Seit 2024 geöffneter Rundweg mit Therapie-Stationen im Seeklima. Unbekannt, ruhig, besonders in der Augusthitze angenehm. Liegt zwischen Waren und Klink.</p>
+          <span class="tag tag-nature">Natur</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Abend</p>
+        <div class="timeline-card">
+          <h4>Sundowner auf der Schloss-Terrasse</h4>
+          <p>Zurück im Schlosshotel: Die Terrasse mit Seeblick ist ideal für den Sonnenuntergang über der Müritz. Abendessen im Hotel oder in Ruhe auf dem Zimmer – nach einem aktiven Tag durchaus verdient.</p>
+          <span class="tag tag-hotel">Hotel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAG 4 -->
+  <div class="day-panel" id="day-3">
+    <h3 class="day-title">Tag 4 – Neustrelitz & Schloss Fleesensee</h3>
+    <p class="day-subtitle">Herzogsgärten, Loire-Flair und ein besonderes Abendessen.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-time">Vormittag</p>
+        <div class="timeline-card">
+          <h4>Neustrelitz – Schlossgarten & Altstadt</h4>
+          <p>Ca. 45 Min. Fahrt. Die ehemalige Residenzstadt hat einen der schönsten Schlossgärten Mecklenburgs – 1730 im Barockstil angelegt, später im englischen Stil umgestaltet. Prachtvoll im August mit blühenden Beeten, Brunnen und antiken Skulpturen. Die Stadtkirche mit 45-m-Turm bietet Aussicht. Dauer: 1,5–2 Stunden.</p>
+          <span class="tag tag-kultur">Kultur</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Mittag</p>
+        <div class="timeline-card">
+          <h4>Mittagessen in Neustrelitz</h4>
+          <p>Die Innenstadt bietet Cafés und Restaurants rund um den Markt. Kein einzelnes Haus dominiert die Bewertungen – einfach nach Gefühl entscheiden. Budget-freundlicher als Abendessen im Schloss.</p>
+          <span class="tag tag-food">Restaurant</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Nachmittag</p>
+        <div class="timeline-card">
+          <h4>Schlossinsel Mirow</h4>
+          <p>Auf dem Rückweg lohnt ein Abstecher nach Mirow (ca. 20 Min. von Neustrelitz). Die Schlossinsel liegt mitten im See – das 3-Königinnen-Palais erzählt die Geschichte der Herzöge von Mecklenburg-Strelitz, darunter die spätere englische Königin Charlotte. Romantische Kulisse.</p>
+          <span class="tag tag-ausflug">Ausflug</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Abend</p>
+        <div class="timeline-card">
+          <h4>Abendessen: Blüchers 1842 im Schloss Fleesensee</h4>
+          <p>Das Highlight des Abends – und des gesamten Trips. Das Blüchers 1842 liegt im denkmalgeschützten Schloss Fleesensee (ca. 30 Min. von Klink). Restaurant in einer ehemaligen Schlosskapelle, Küche mit Produkten aus eigenem Anbau. Mecklenburger Lammrücken, Rinderfilet, Gemüse aus der Landwirtschaft Fleesensee. Reservierung unbedingt erforderlich. Bar 1842 im Anschluss empfehlenswert – ausgezeichnet als beste Cocktailbar Mecklenburg-Vorpommerns.</p>
+          <span class="tag tag-food">Restaurant</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAG 5 -->
+  <div class="day-panel" id="day-4">
+    <h3 class="day-title">Tag 5 – Malchow & Abreise</h3>
+    <p class="day-subtitle">Ein letzter Stopp, dann auf nach Hause.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-time">Morgen</p>
+        <div class="timeline-card">
+          <h4>Ausgiebiges Frühstück im Hotel</h4>
+          <p>Das Frühstück im Schlosshotel Klink gilt laut Gästebewertungen als eines der Stärken des Hauses – abwechslungsreich, frisch, gut bestückt. Nicht hetzen.</p>
+          <span class="tag tag-hotel">Hotel</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Vor dem Check-out</p>
+        <div class="timeline-card">
+          <h4>Letzter Spaziergang am Müritzufer</h4>
+          <p>Der Naturstrand direkt am Schloss ist am frühen Morgen fast menschenleer. Ein letztes Mal die Stille und das Licht über der Müritz genießen, bevor es losgeht.</p>
+          <span class="tag tag-nature">Natur</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Vormittag</p>
+        <div class="timeline-card">
+          <h4>Malchow – die Inselstadt mit der Drehbrücke</h4>
+          <p>Ca. 30 Min. Fahrt westlich. Malchows Altstadt liegt auf einer Insel mitten im See. Die historische Drehbrücke öffnet sich zur vollen Stunde für Boote – das Zusehen lohnt sich. Spaziergang durch die Altstadt, Kaffee am Wasser. Dauer: 1,5 Stunden.</p>
+          <span class="tag tag-ausflug">Ausflug</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-time">Mittag / Rückreise</p>
+        <div class="timeline-card">
+          <h4>Mittagessen & Aufbruch</h4>
+          <p>Letztes Mittagessen in Malchow am Wasser, dann Heimreise. Alternativ: Fischbrötchen vom Räucherfisch-Stand mitnehmen – unkomplizierter Abschluss einer ruhigen Woche.</p>
+          <span class="tag tag-food">Restaurant</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESTAURANTS ────────────────────────────────────────── -->
+  <div class="section-header">
+    <p class="section-eyebrow">Kulinarik</p>
+    <h2>Empfohlene Restaurants</h2>
+  </div>
+
+  <div class="restaurant-list">
+    <div class="restaurant-card">
+      <div class="restaurant-badge">🏰</div>
+      <div class="restaurant-info">
+        <h3>Schlosshotel Klink – Hotelrestaurant</h3>
+        <p class="rest-meta">Klink · Regionale Küche · Direkt im Hotel</p>
+        <p>Frischer Zander, Wild aus der Region, saisonale Menüs. Ideal für Ankunfts- und ruhige Abende. Gutes Preis-Leistungs-Verhältnis für ein Schlosshotel.</p>
+      </div>
+      <div class="price-dots">€€</div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-badge">🌿</div>
+      <div class="restaurant-info">
+        <h3>Moments</h3>
+        <p class="rest-meta">Neuer Markt 19, Waren · Mediterran-Europäisch</p>
+        <p>Aktuell das am besten bewertete Restaurant in Waren. Hochwertige Küche, sorgfältig ausgewählte Produkte. Reservierung erforderlich – im August schnell ausgebucht.</p>
+      </div>
+      <div class="price-dots">€€€</div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-badge">🐟</div>
+      <div class="restaurant-info">
+        <h3>Räucherfisch vom Hafen</h3>
+        <p class="rest-meta">Nordhafen Waren · Imbiss / Direkt vom Boot</p>
+        <p>Zander, Aal, Kleine Maräne – frisch aus der Müritz und direkt geräuchert. Das ist das authentischste Essen der Region. Günstig, schnell, mit Seeblick.</p>
+      </div>
+      <div class="price-dots">€</div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-badge">🦌</div>
+      <div class="restaurant-info">
+        <h3>Restaurant Nationalparkhotel Kranichrast</h3>
+        <p class="rest-meta">Schwarzenhof b. Kargow · Regionale Küche</p>
+        <p>Direkt am Nationalparkeingang. Müritzwild, Zander, ehrliche Küche mit sehr guten Bewertungen. Perfekt als Mittagsstopp nach dem Morgenspaziergang im Nationalpark.</p>
+      </div>
+      <div class="price-dots">€€</div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-badge">✨</div>
+      <div class="restaurant-info">
+        <h3>Blüchers 1842 – Schloss Fleesensee</h3>
+        <p class="rest-meta">Göhren-Lebbin · Gehobene Küche · ca. 30 Min.</p>
+        <p>Das gastronomische Highlight der Region. Ehemaliges Gourmetrestaurant von Johann Lafer, jetzt neu konzipiert in historischer Schlosskapelle. Eigenanbau, Mecklenburger Tradition, kreative Küche. Reservierung zwingend – Warteliste im August möglich.</p>
+      </div>
+      <div class="price-dots">€€€€</div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-badge">🏛️</div>
+      <div class="restaurant-info">
+        <h3>Ratskeller Waren</h3>
+        <p class="rest-meta">Alter Markt, Waren · Gutbürgerlich / Regional</p>
+        <p>Direkt am Hafen, urig eingerichtet, solide regionale Küche. Kein Foodie-Tempel, aber zuverlässig gut und mit Lage. Für einen entspannten Abend ohne Dresscode.</p>
+      </div>
+      <div class="price-dots">€€</div>
+    </div>
+  </div>
+
+  <!-- ── PRAKTISCHE INFOS ───────────────────────────────────── -->
+  <div class="section-header">
+    <p class="section-eyebrow">Praktisches</p>
+    <h2>Alles Wichtige auf einen Blick</h2>
+  </div>
+
+  <div class="cards-grid">
+    <div class="info-card">
+      <div class="info-card-icon">🚗</div>
+      <h3>Anreise & Parken</h3>
+      <p>Schlosshotel Klink liegt direkt an der B192 zwischen Waren und Malchow. Hoteleigener Parkplatz vorhanden, kostenlos. Abschließbarer Fahrradschuppen ebenfalls verfügbar.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">📍</div>
+      <h3>Adresse Hotel</h3>
+      <p>Seehotel Schloss Klink<br>Schlossstraße 6<br>17192 Klink<br>(bei Waren / Müritz)</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🌡️</div>
+      <h3>August – Wetter</h3>
+      <p>Mecklenburg-Vorpommern ist das sonnenreichste Bundesland. August: 22–26 °C, wenig Regen. Sonnencrème, Badesachen und ein leichter Pullover für die Abende einpacken.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🚢</div>
+      <h3>Ausflüge buchen</h3>
+      <ul>
+        <li>Weiße Flotte Müritz: weiße-flotte-mueritz.de</li>
+        <li>Müritzeum: mueritzeum.de</li>
+        <li>Blüchers 1842: Online-Reservierung über schlosshotel-fleesensee.com</li>
+        <li>3-Königinnen-Palais Mirow: 3koeniginnen.de</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🚴</div>
+      <h3>Fahrradverleih</h3>
+      <p>Das Schlosshotel bietet Fahrradverleih an. Die Region ist flach und radfahrerfreundlich – viele Strecken im Nationalpark sind nur per Rad oder zu Fuß zugänglich.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">⚠️</div>
+      <h3>Hinweise August</h3>
+      <ul>
+        <li>Hochsaison: Restaurants früh reservieren</li>
+        <li>Erstes August-Wochenende: Müritzschwimmen in Waren (Menschenmassen)</li>
+        <li>Nationalpark: Hunde an der Leine</li>
+        <li>Blüchers 1842: Ggf. 2–3 Wochen vorab buchen</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tips-box">
+    <h3>Insider-Tipps</h3>
+    <div class="tips-grid">
+      <div class="tip-item">
+        <span class="tip-icon">🌅</span>
+        <p class="tip-text">Frühaufsteher werden belohnt: Sonnenaufgang über der Müritz vom Schlossbalkon ist unvergesslich.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">🦅</span>
+        <p class="tip-text">Seeadler sieht man am besten früh morgens am Nationalparkeingang Federow – Fernglas einpacken.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">🌿</span>
+        <p class="tip-text">Der Heilwald Nesselberg ist 2024 eröffnet worden – kaum Touristen, schöner Rundweg im Seeklima.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">🎭</span>
+        <p class="tip-text">Müritz-Saga: Freilichttheater in Waren, historisches Stück mit lokalem Bezug. Tickets vorab prüfen.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">🚤</span>
+        <p class="tip-text">Kajak- oder Kanuverleih lohnt sich – die Seenverbindungen sind nur zu Wasser wirklich erlebbar.</p>
+      </div>
+      <div class="tip-item">
+        <span class="tip-icon">🧭</span>
+        <p class="tip-text">Schaugarten am Tiefwarensee: kaum bekannt, frei zugänglich, schöner botanischer Garten auf Landzunge.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<footer>
+  Reiseplan · Ausflug zum Schlosshotel Klink · August 2025
+</footer>
+
+<script>
+  function showDay(index) {
+    document.querySelectorAll('.day-panel').forEach((p, i) => {
+      p.classList.toggle('active', i === index);
+    });
+    document.querySelectorAll('.day-tab').forEach((t, i) => {
+      t.classList.toggle('active', i === index);
+    });
+  }
+</script>
+</body>
+</html>
